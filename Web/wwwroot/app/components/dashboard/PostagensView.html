@@ -1,0 +1,106 @@
+<div class="container-fluid" disable-all="!ctrl.perfilSelecionado.PerfilAtivo">
+  <h1 class="h3 mb-4 text-gray-800"><img src="assets/img/ico-photo-group.png" class="mr-2 align-middle">Postagens</h1>
+  <div class="row">
+    <div class="col-md-9">
+      <div class="card shadow mb-4">
+        <div class="card-header d-flex justify-content-between">
+          <ul class="nav nav-tabs card-header-tabs" id="nav-tab">
+            <li class="nav-item">
+              <a class="nav-link active font-weight-bold" data-toggle="tab" href="#nav-agendados"><i class="fas fa-clock"></i>&nbsp;Agendados</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link font-weight-bold" data-toggle="tab" href="#nav-postados"><i class="fas fa-paper-plane"></i>&nbsp;Postados</a>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="nav-agendados">
+              <small ng-if="(ctrl.posts | filter: { Status: 'Pendente' }).length == 0">Não foram agendados posts ainda</small>
+              <div class="table-responsive">
+                <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr ng-repeat="post in ctrl.posts | filter: { Status: 'Pendente' }">
+                      <td class="text-center w-25">
+                        <img src="{{post.Imagem}}" width="100">
+                      </td>
+                      <td>
+                        <span class="d-inline-block text-truncate" style="max-width: 250px;">{{post.Descricao}}</span>
+                        <div class="d-flex mt-3 flex-row-reverse">
+                          <span class="ml-3">
+                            <img class="mr-1" src="assets/img/ico-calendar.png">
+                            <small>
+                              <i>{{post.Data | date: 'dd/MM/yyyy'}}</i>
+                            </small>
+                          </span>
+                          <span>
+                            <img class="mr-1" src="assets/img/ico-alarm.png">
+                            <small>
+                              <i>{{post.Hora | date: 'HH:mm'}}</i>
+                            </small>
+                          </span>
+                        </div>
+                      </td>
+                      <td class="w-25">
+                        <a href="" ng-click="ctrl.remover(post.Id)" class="d-block text-dark btedit mt-2"><img src="assets/img/ico-excluir.png" class="ml-5 mr-2">Excluir</a>
+                        <a ui-sref="dashboard.agendamento({id: '{{post.Id}}'})" class="d-block text-dark btedit"><img src="assets/img/ico-editar.png" class="ml-5 mr-2">Editar</a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="nav-postados">
+              <small ng-if="(ctrl.posts | filter: { Status: 'Sucesso' }).length == 0">Nenhum post enviado até o momento</small>
+              <div class="table-responsive">
+                <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
+                  <tbody>
+                    <tr ng-repeat="post in ctrl.posts | filter: { Status: 'Sucesso' }">
+                      <td class="text-center w-25">
+                        <img src="{{post.Imagem}}" width="100">
+                      </td>
+                      <td>
+                        <span class="d-inline-block text-truncate" style="max-width: 250px;">{{post.Descricao}}</span>
+                        <div class="d-flex mt-3 flex-row-reverse">
+                          <span class="ml-3">
+                            <img class="mr-1" src="assets/img/ico-calendar.png">
+                            <small>
+                              <i>{{post.Data | date: 'dd/MM/yyyy'}}</i>
+                            </small>
+                          </span>
+                          <span>
+                            <img class="mr-1" src="assets/img/ico-alarm.png">
+                            <small>
+                              <i>{{post.Hora | date: 'HH:mm'}}</i>
+                            </small>
+                          </span>
+                        </div>
+                      </td>
+                      <td class="w-25">
+                        <a href="" ng-click="ctrl.remover(post.Id)" class="d-block text-dark btedit mt-2"><img src="assets/img/ico-excluir.png" class="ml-5 mr-2">Excluir</a>
+                        <a ui-sref="dashboard.agendamento({id: '{{post.Id}}'})" class="d-block text-dark btedit"><img src="assets/img/ico-editar.png" class="ml-5 mr-2">Editar</a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card shadow mb-4">
+        <div class="card-body">
+          <a ui-sref="dashboard.agendamento" class="linear-color-bground text-uppercase text-white d-block text-center bblue mb-3">
+            <small>Agendar</small>
+          </a>
+          <!--<a ui-sref="dashboard.postagens" class="linear-color-bground text-uppercase text-white d-block text-center bblue mb-3"><small>Visualizar Postagens</small></a>-->
+          <a class="linear-color-bground text-uppercase text-white d-block text-center p-2">
+            <small>Postagens Pendentes <span class="white-circle ml-2">{{ctrl.pendentes}}</span></small>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

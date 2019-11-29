@@ -1,0 +1,2 @@
+Scaffold-DbContext "server=localhost;port=3306;database=agensvoa;user=root;charset=utf8;password=" Pomelo.EntityFrameworkCore.MySql -OutputDir Models –Schema candidate
+Scaffold-DbContext "server=localhost;port=3306;database=agensvoa;user=root;charset=utf8;password=" Devart.Data.MySql.Entity.EFCore -OutputDir Models

@@ -1,0 +1,137 @@
+<div class="container-fluid" disable-all="!ctrl.perfilSelecionado.PerfilAtivo">
+  <h1 class="h3 mb-4 text-gray-800"><img src="assets/img/ico-conversation.png" class="mr-2 align-middle">Comentários</h1>
+  <div class="row">
+    <div class="col-md-9">
+      <div class="card shadow mb-4">
+        <div class="card-header d-flex justify-content-between">
+          <ul class="nav nav-tabs card-header-tabs" id="nav-tab">
+            <li class="nav-item">
+              <a class="nav-link active font-weight-bold" data-toggle="tab" href="#novos"><i class="fas fa-comments"></i>&nbsp;Novos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link font-weight-bold" data-toggle="tab" href="#respondidos"><i class="fas fa-comment-check"></i>&nbsp;Respondidos</a>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="novos">
+              <small ng-if="ctrl.comentariosNovos.length == 0">Sem novos comentários no momento</small>
+              <ul class="list-unstyled" id="accordion">
+                <li class="bgreydark p-3 mb-1" ng-repeat="post in ctrl.comentariosNovos track by $index">
+                  <div class="row" data-toggle="collapse" data-target="#post{{$index}}" style="cursor: pointer">
+                    <div class="text-center col-md-2">
+                      <img src="{{post.Imagem}}" width="70">
+                    </div>
+                    <div class="align-middle col-md-8">
+                      <span class="text-dark font-weight-bold">{{post.Descricao}}</span>
+                      <small class="d-block">
+                        <i class="text-dark">{{post.Criado | date: 'dd/MM/yyyy HH:mm'}}</i>
+                      </small>
+                    </div>
+                    <div class="text-center align-middle col-md-2 mt-3">
+                      <span class="white-circle circle-big ml-2">{{(post.Comentarios | filter: {Respondido: false}).length}}</span>
+                    </div>
+                  </div>
+                  <div id="post{{$index}}" class="row collapse" data-parent="#accordion">
+                    <div class="col-md-12" ng-repeat="comentario in post.Comentarios | filter: {Respondido: false}">
+                      <div class="row bgreylight p-3 mt-3">
+                        <div class="col-md-1">
+                          <img class="img-profile rounded-circle" src="{{comentario.FotoUsuario}}" width="47">
+                        </div>
+                        <div class="col-md-4 ml-3">
+                          <span class="d-block font-weight-bold text-dark">@{{comentario.Usuario}}</span>
+                          <small>{{comentario.NomeUsuario}}</small>
+                        </div>
+                        <div class="col-md-6 ml-3">
+                          <span class="text-dark font-italic bg-white">
+                            <i class="fas fa-quote-left" style="font-size: 12px; vertical-align: top;"></i>
+                            {{comentario.Comentario}}
+                            <i class="fas fa-quote-right" style="font-size: 12px; vertical-align: bottom;"></i>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="row bgreylight p-3">
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" ng-model="comentario.Resposta" placeholder="Respondendo o comentário...">
+                          <div class="input-group-append">
+                            <button class="btn text-white text-center linear-color-bground bgreen" type="submit" ng-click="ctrl.responderComentario(post.Id, comentario.Id, comentario.Resposta)">Responder</button>
+                            <!--<button class="btn text-white text-center linear-color-bground" type="submit" ng-click="ctrl.curtirComentario(comentario.Id)"><i class="far fa-heart"></i></button>-->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div id="respondidos" class="tab-pane fade" show>
+              <small ng-if="ctrl.comentariosRespondidos.length == 0">Sem comentários respondidos no momento</small>
+              <ul class="list-unstyled" id="accordion">
+                <li class="bgreydark p-3 mb-1" ng-repeat="post in ctrl.comentariosRespondidos track by $index">
+                  <div class="row" data-toggle="collapse" data-target="#post{{$index}}" style="cursor: pointer">
+                    <div class="text-center col-md-2">
+                      <img src="{{post.Imagem}}" width="70">
+                    </div>
+                    <div class="align-middle col-md-8">
+                      <span class="text-dark font-weight-bold">{{post.Descricao}}</span>
+                      <small class="d-block">
+                        <i class="text-dark">{{post.Criado | date: 'dd/MM/yyyy HH:mm'}}</i>
+                      </small>
+                    </div>
+                    <div class="text-center align-middle col-md-2 mt-3">
+                      <span class="white-circle circle-big ml-2">{{(post.Comentarios | filter: {Respondido: true} ).length}}</span>
+                    </div>
+                  </div>
+                  <div id="post{{$index}}" class="row collapse" data-parent="#accordion">
+                    <div class="col-md-12" ng-repeat="comentario in post.Comentarios | filter: {Respondido: true}">
+                      <div class="row bgreylight p-3 mt-3">
+                        <div class="col-md-1">
+                          <img class="img-profile rounded-circle" src="{{comentario.FotoUsuario}}" width="47">
+                        </div>
+                        <div class="col-md-4 ml-3">
+                          <span class="d-block font-weight-bold text-dark">@{{comentario.Usuario}}</span>
+                          <small>{{comentario.NomeUsuario}}</small>
+                        </div>
+                        <div class="col-md-6 ml-3">
+                          <span class="text-dark font-italic bg-white">
+                            <i class="fas fa-quote-left" style="font-size: 12px; vertical-align: top;"></i>
+                            {{comentario.Comentario}}
+                            <i class="fas fa-quote-right" style="font-size: 12px; vertical-align: bottom;"></i>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="row bgreylight p-3">
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" ng-model="comentario.Resposta" placeholder="Respondendo o comentário...">
+                          <div class="input-group-append">
+                            <button class="btn text-white text-center linear-color-bground bgreen" type="submit" ng-click="ctrl.responderComentario(post.Id, comentario.Id, comentario.Resposta)">Alterar</button>
+                            <button class="btn text-white text-center linear-color-bground" type="submit" ng-click="ctrl.removerComentario(post.Id, comentario.IdResposta)"><i class="far fa-times"></i></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card shadow">
+        <div class="card-body">
+          <a ui-sref="dashboard.agendamento" class="linear-color-bground text-uppercase text-white d-block text-center bblue mb-3">
+            <small>Agendar</small>
+          </a>
+          <a ui-sref="dashboard.postagens" class="linear-color-bground text-uppercase text-white d-block text-center bblue">
+            <small>Visualizar Postagens</small>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,130 @@
+<div ui-view>
+  <div ng-if="home.etapaAssinatura == 1">
+    <div class="py-5 text-center">
+      <h1 class="display-4">Escolha um de nossos planos</h1>
+      <span class="h2 d-block">Agora, precisamos que escolha um plano</span>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-3 text-center pb-4" ng-repeat="plano in home.planos">
+        <a href="" class="d-block text-dark p-3 bt-plano" ng-class="home.planoSelecionado == plano ? 'active' : ''" ng-click="home.planoSelecionado=plano">
+          <div class="linear-color-bground bblue text-center pt-3 pb-3">
+            <span class="d-block text-white font-weight-bold display-3">{{plano.Periodo}}</span>
+            <span class="d-block text-white font-weight-bold h3" ng-if="plano.TipoPeriodo == 0">{{ plano.Periodo == 1 ? "Dia" : "Dias" }}</span>
+            <span class="d-block text-white font-weight-bold h3" ng-if="plano.TipoPeriodo == 1">{{ plano.Periodo == 1 ? "Mês" : "Meses" }}</span>
+            </div>
+          <span class="d-block font-weight-bold h5 mt-2 mb-1">Plano {{plano.Nome}}</span>
+          <span class="d-block h5 mt-0">por apenas</span>
+          R$ <span class="display-4">{{plano.ValorInteiro}}</span>,<span class="h4">{{plano.ValorFracao}}</span>
+        </a>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-3"></div>
+      <div class="col-md-3">
+        <button class="btn btn-primary btn-lg btn-block linear-color-bground mb-3" type="submit" ng-if="!home.planoSelecionado.Trial" ng-click="home.etapaAssinatura = 2">Continuar</button>
+        <button class="btn btn-primary btn-lg btn-block linear-color-bground mb-3" type="submit" ng-if="home.planoSelecionado.Trial" ng-click="home.pronto()">Continuar</button>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+  </div>
+  <div ng-if="home.etapaAssinatura == 2">
+    <form name="pagamentoform" novalidate autocomplete="off" class="py-5">
+      <div class="row mb-3 justify-content-center">
+        <div class="col-md-8">
+          <div class="form-group row">
+            <div class="col-md-12 mb-4 text-center">
+              <img src="assets/img/bandeiras-cartoes.png" />
+            </div>
+            <div class="col-12 mb-3">
+              <label class="font-weight-bold">Número do Cartão</label>
+              <span class="linear-color-round">
+                <input type="text" class="form-control" name="numerocartao" mask="9" repeat="16" clean="true" restrict="reject" ng-model="home.pagamento.NumeroCartao" cc-number cc-eager-type required>
+              </span>
+              <div ng-messages="pagamentoform.numerocartao.$error" ng-if="pagamentoform.numerocartao.$dirty || pagamentoform.$submitted || pagamentoform.numerocartao.$invalid && pagamentoform.numerocartao.$ccEagerType" class="invalid-feedback">
+                <div ng-message="required">Obrigatório</div>
+                <div ng-message="ccNumber">Número inválido</div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 mb-3">
+              <label class="font-weight-bold">Nome do titular</label>
+              <span class="linear-color-round">
+                <input type="text" class="form-control" name="nomecartao" ng-model="home.pagamento.NomeCartao" placeholder="Nome impresso no cartão" required>
+              </span>
+              <div ng-messages="pagamentoform.nomecartao.$error" ng-if="pagamentoform.nomecartao.$dirty || pagamentoform.$submitted" class="invalid-feedback">
+                <div ng-message="required">Obrigatório</div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 mb-3">
+              <label class="font-weight-bold">CPF do titular</label>
+              <span class="linear-color-round">
+                <input type="text" class="form-control" name="cpfcartao" mask="999.999.999-99" clean="true" restrict="reject" ng-model="home.pagamento.CpfCartao" placeholder="Para emissão da nota fiscal" maxlength="14" required>
+              </span>
+              <div ng-messages="pagamentoform.cpfcartao.$error" ng-if="pagamentoform.cpfcartao.$dirty || pagamentoform.$submitted" class="invalid-feedback">
+                <div ng-message="required">Obrigatório</div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 mb-3 mb-sm-0">
+              <label class="font-weight-bold">Data de Expiração</label>
+              <div class="row">
+                <div class="col-6">
+                  <span class="linear-color-round">
+                    <select class="form-control" name="mesexpiracao" ng-model="home.pagamento.MesExpiracao" cc-exp-month required maxlength="2">
+                      <option value="">-- Mês --</option>
+                      <option ng-repeat="mes in home.meses" value="{{mes.mes}}">{{mes.mes}} | {{mes.nome}}</option>
+                    </select>
+                  </span>
+                  <div ng-messages="pagamentoform.mesexpiracao.$error" ng-if="pagamentoform.mesexpiracao.$dirty || pagamentoform.$submitted" class="invalid-feedback">
+                    <div ng-message="required">Obrigatório</div>
+                    <div ng-message="ccExpMonth">Inválido</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <span class="linear-color-round">
+                    <select class="form-control" name="anoexpiracao" cc-exp-year required ng-model="home.pagamento.AnoExpiracao" maxlength="2">
+                      <option value="">-- Ano --</option>
+                      <option ng-repeat="ano in home.anos" value="{{ano.resumido}}">{{ano.completo}}</option>
+                    </select>
+                  </span>
+                  <div ng-messages="pagamentoform.anoexpiracao.$error" ng-if="pagamentoform.anoexpiracao.$dirty || pagamentoform.$submitted" class="invalid-feedback">
+                    <div ng-message="required">Obrigatório</div>
+                    <div ng-message="ccExpYear">Inválido</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 mb-3">
+              <label class="font-weight-bold">Cód. de segurança</label>
+              <span class="linear-color-round">
+                <input type="text" class="form-control" ng-model="home.pagamento.CodigoSeguranca" name="codigoseguranca" cc-cvc required maxlength="4">
+              </span>
+              <div ng-messages="pagamentoform.codigoseguranca.$error" ng-if="pagamentoform.codigoseguranca.$dirty || pagamentoform.$submitted" class="invalid-feedback">
+                <div ng-message="required">Obrigatório</div>
+                <div ng-message="ccCvc">Inválido</div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6">
+              <label class="font-weight-bold">Parcelamento</label>
+              <span class="linear-color-round">
+                <select class="form-control" name="parcelamento" required ng-model="home.pagamento.Parcelamento">
+                  <option value="">-- Parcela --</option>
+                  <option ng-repeat="parcela in home.planoSelecionado.ValorParcelas track by $index" value="{{$index + 1}}">{{$index + 1}} x R$ {{parcela|number:2}}</option>
+                </select>
+              </span>
+              <div ng-messages="pagamentoform.parcelamento.$error" ng-if="pagamentoform.parcelamento.$dirty || pagamentoform.$submitted" class="invalid-feedback">
+                <div ng-message="required">Obrigatório</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-3">
+          <button class="btn btn-primary btn-lg btn-block linear-color-bground bgreen" type="submit" ng-click="home.etapaAssinatura = 1">Voltar</button>
+        </div>
+        <div class="col-md-3">
+          <button class="btn btn-primary btn-lg btn-block linear-color-bground" type="submit" ng-click="home.pronto(pagamentoform)">Continuar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

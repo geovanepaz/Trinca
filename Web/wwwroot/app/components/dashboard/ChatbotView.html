@@ -1,0 +1,246 @@
+<div class="container-fluid" disable-all="!ctrl.perfilSelecionado.PerfilAtivo">
+  <div class="row">
+    <div class="col-xl-12 col-lg-7">
+      <div class="card shadow mb-4">
+        <div class="card-header d-flex justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary"><img src="assets/img/ico-bot.png" class="mr-2 align-bottom">Chat BOT</h6>
+          <ul class="nav nav-tabs card-header-tabs" id="nav-tab">
+            <li class="nav-item">
+              <a class="nav-link active font-weight-bold" data-toggle="tab" href="#principal"><i class="fas fa-align-left"></i>&nbsp;Principal</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link font-weight-bold" data-toggle="tab" href="#configuracoes"><i class="fas fa-cog"></i>&nbsp;Configurações</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link font-weight-bold" data-toggle="tab" href="#dicas"><i class="fas fa-lightbulb"></i>&nbsp;Dicas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link bgreen text-white" href="" ng-click="ctrl.salvar(chatbot)"><i class="fas fa-save"></i>&nbsp;Salvar</a>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <form name="chatbot" novalidate autocomplete="off">
+            <div class="tab-content">
+              <div class="tab-pane fade show active" id="principal">
+                <h6 class="font-weight-bold ml-1">Texto de apresentação do menu principal</h6>
+                <textarea id="txaintro" style="resize: none" class="w-100 txt" name="TextoInicial" required placeholder="Adicione um texto de apresentação para este menu" ng-model="ctrl.chatbot.TextoInicial"></textarea>
+                <div ng-messages="chatbot.TextoInicial.$error" ng-if="chatbot.TextoInicial.$dirty || chatbot.$submitted" class="invalid-feedback">
+                  <div ng-message="required">Obrigatório</div>
+                </div>
+                <ul class="p-0 col-md-12" ng-repeat="item in ctrl.chatbot.Alternativas track by $index" ng-init="$menu = $index" ng-value="item.Codigo = $index + 1">
+                  <li class="card bgreydark card-body d-block mb-3">
+                    <div class="row">
+                      <a href="" class="d-inline mr-2" ng-click="ctrl.adicionarAlternativa(ctrl.chatbot.Alternativas)">
+                        <img src="assets/img/ico-mais.png">
+                      </a>
+                      <span class="d-inline-block mr-2 number text-white text-center font-weight-bold">{{ $menu + 1 }}</span>
+                      <div class="d-inline-block w-25 mr-2">
+                        <span class="linear-color-round">
+                          <input type="text" placeholder="Ex.: Valor, Preço, Custos" name="OpcaoMenu{{$menu}}" required ng-model="item.Opcao" class="txtitem pl-3 w-100">
+                        </span>
+                        <div ng-messages="chatbot['OpcaoMenu'+$menu].$error" ng-if="chatbot['OpcaoMenu'+$menu].$dirty || chatbot.$submitted" class="invalid-feedback">
+                          <div ng-message="required">Obrigatório</div>
+                        </div>
+                      </div>
+                      <div class="d-inline-block w-50 mr-2">
+                        <span class="linear-color-round">
+                          <tags-input ng-model="item.PalavrasChave" name="TagMenu{{$menu}}" required use-strings="true" min-tags="1" max-tags="20" enforce-max-tags add-on-space="true" placeholder="Tags"></tags-input>
+                        </span>
+                        <div ng-messages="chatbot['TagMenu'+$menu].$error" ng-if="chatbot['TagMenu'+$menu].$dirty || chatbot.$submitted" class="invalid-feedback">
+                          <div ng-message="required">Obrigatório</div>
+                          <div ng-message="minTags">Mínimo, 1 tag</div>
+                          <div ng-message="maxTags">Máximo, 20 tags</div>
+                        </div>
+                      </div>
+                      <div class="d-inline-block" ng-if="$menu > 0">
+                        <a href="" class="d-block text-dark ml-4 mt-1" ng-click="ctrl.removerAlternativa(ctrl.chatbot.Alternativas, $menu)">
+                          <img src="assets/img/ico-excluir.png" class="mr-2">Excluir
+                        </a>
+                      </div>
+                    </div>
+                    <ul class="pl-0 mt-3">
+                      <li class="row card bgreylight card-body d-block">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <h6 class="font-weight-bold">Adicione uma resposta para o item acima</h6>
+                            <hr />
+                            <div class="row">
+                              <a href="" class="linear-color-bground m-1" ng-class="item.TipoResposta == 'Texto' ? 'bgreen' : ''" ng-click="ctrl.alternativa('Texto', item)">Texto</a>
+                              <!--<a href="" class="linear-color-bground m-1" ng-class="item.TipoResposta == 'Imagem' ? 'bgreen' : ''" ng-click="ctrl.alternativa('Imagem', item)">Imagem</a>-->
+                              <!--<a href="" class="linear-color-bground m-1" ng-class="item.TipoResposta == 'Link' ? 'bgreen' : ''" ng-click="ctrl.alternativa('Link', item)">Link</a>-->
+                              <a href="" class="linear-color-bground m-1" ng-class="item.TipoResposta == 'Submenu' ? 'bgreen' : ''" ng-click="ctrl.alternativa('Submenu', item)">+ Novo item</a>
+                            </div>
+                            <div class="row mt-3">
+                              <div class="col-md-11 p-0">
+                                <span class="linear-color-round lgreen w-100" ng-if="item.TipoResposta != 'Submenu'">
+                                  <textarea style="resize: none" name="RepostaMenuTexto{{$menu}}" required class="txtitem d-block pl-3 w-100" placeholder="Texto descritivo" ng-model="item.RespostaTexto" ng-if="item.TipoResposta == 'Texto'"></textarea>
+                                  <!--<input type="file" name="RepostaMenuImagem{{$menu}}" required class="txtitem d-block pl-3 pt-1 w-100 d-inline-block" ng-file-select="onFileSelect($files)" ng-model="item.RespostaImagem" ng-if="item.TipoResposta == 'Imagem'">-->
+                                  <!--<input type="url" name="RepostaMenuLink{{$menu}}" required placeholder="http://" class="txtitem d-block pl-3 w-100 d-inline-block" ng-model="item.RespostaLink" ng-if="item.TipoResposta == 'Link'">-->
+                                </span>
+                                <div ng-messages="chatbot['RepostaMenuTexto'+$menu].$error" ng-if="item.TipoResposta == 'Texto' && (chatbot['RepostaMenuTexto'+$menu].$dirty || chatbot.$submitted)" class="invalid-feedback">
+                                  <div ng-message="required">Obrigatório</div>
+                                </div>
+                                <!--<div ng-messages="chatbot['RepostaMenuImagem'+$menu].$error" ng-if="item.TipoResposta == 'Imagem' && (chatbot['RepostaMenuImagem'+$menu].$dirty || chatbot.$submitted)" class="invalid-feedback">
+                                  <div ng-message="required">Obrigatório</div>
+                                  <div ng-message="file">Imagem obrigatória</div>
+                                </div>-->
+                                <!--<div ng-messages="chatbot['RepostaMenuLink'+$menu].$error" ng-if="item.TipoResposta == 'Link' && (chatbot['RepostaMenuLink'+$menu].$dirty || chatbot.$submitted)" class="invalid-feedback">
+                                  <div ng-message="required">Obrigatório</div>
+                                  <div ng-message="url">Link inválido</div>
+                                </div>-->
+                                <!--<img class="mt-3 img-fluid" ng-if="item.RespostaImagem && item.TipoResposta == 'Imagem'" ng-src="{{item.RespostaImagem}}" width="300">-->
+                                <div ng-if="item.TipoResposta == 'Submenu'">
+                                  <h6 class="font-weight-bold ml-1">Texto de apresentação deste submenu</h6>
+                                  <span class="linear-color-round w-100 lpurple mb-1">
+                                    <textarea style="resize: none" name="TextoSubmenu{{$menu}}" required ng-model="item.SubMenu.TextoInicial" class="txtitem txt d-block pl-3 w-100" placeholder="Adicione um texto de apresentação para este submenu"></textarea>
+                                  </span>
+                                  <div ng-messages="chatbot['TextoSubmenu'+$menu].$error" ng-if="item.TipoResposta == 'Submenu' && (chatbot['TextoSubmenu'+$menu].$dirty || chatbot.$submitted)" class="invalid-feedback">
+                                    <div ng-message="required">Obrigatório</div>
+                                  </div>
+                                </div>
+                                <ul class="p-0" ng-repeat="subitem in item.SubMenu.Alternativas track by $index" ng-init="$submenu = $index" ng-value="subitem.Codigo = $index + 1">
+                                  <li class="card bgreydark card-body d-block mb-3">
+                                    <div class="row">
+                                      <a href="" class="d-inline mr-2" ng-click="ctrl.adicionarAlternativa(item.SubMenu.Alternativas)">
+                                        <img src="assets/img/ico-mais.png">
+                                      </a>
+                                      <span class="d-inline-block mr-2 bpurple number text-white text-center font-weight-bold">{{ $menu + 1 }}.{{ $submenu + 1 }}</span>
+                                      <div class="d-inline-block w-25 mr-2">
+                                        <span class="linear-color-round lpurple">
+                                          <input type="text" placeholder="Ex.: Valor, Preço, Custos" name="OpcaoSubmenu{{$submenu}}" required ng-model="subitem.Opcao" class="txtitem pl-3 w-100">
+                                        </span>
+                                        <div ng-messages="chatbot['OpcaoSubmenu'+$submenu].$error" ng-if="chatbot['OpcaoSubmenu'+$submenu].$dirty || chatbot.$submitted" class="invalid-feedback">
+                                          <div ng-message="required">Obrigatório</div>
+                                        </div>
+                                      </div>
+                                      <div class="d-inline-block w-50 mr-2">
+                                        <span class="linear-color-round lpurple">
+                                          <tags-input ng-model="subitem.PalavrasChave" name="TagSubmenu{{$submenu}}" required enforce-max-tags use-strings="true" min-tags="1" max-tags="20" add-on-space="true" placeholder="Tags"></tags-input>
+                                        </span>
+                                        <div ng-messages="chatbot['TagSubmenu'+$submenu].$error" ng-if="chatbot['TagSubmenu'+$submenu].$dirty || chatbot.$submitted" class="invalid-feedback">
+                                          <div ng-message="required">Obrigatório</div>
+                                          <div ng-message="minTags">Mínimo, 1 tag</div>
+                                          <div ng-message="maxTags">Máximo, 20 tags</div>
+                                        </div>
+                                      </div>
+                                      <div class="d-inline-block" ng-if="$submenu > 0">
+                                        <a href="" class="d-block text-dark ml-4 mt-1" ng-click="ctrl.removerAlternativa(item.SubMenu.Alternativas, $submenu)">
+                                          <img src="assets/img/ico-excluir.png" class="mr-2">Excluir
+                                        </a>
+                                      </div>
+                                    </div>
+                                    <ul class="pl-0 mt-3">
+                                      <li class="row card bgreylight card-body d-block">
+                                        <div class="row">
+                                          <div class="col-md-12">
+                                            <h6 class="font-weight-bold">Adicione uma resposta para o item acima</h6>
+                                            <hr>
+                                            <div class="row">
+                                              <a href="" class="linear-color-bground m-1" ng-class="subitem.TipoResposta == 'Texto' ? 'bpurple' : ''" ng-click="ctrl.alternativa('Texto', subitem)">Texto</a>
+                                              <!--<a href="" class="linear-color-bground m-1" ng-class="subitem.TipoResposta == 'Imagem' ? 'bpurple' : ''" ng-click="ctrl.alternativa('Imagem', subitem)">Imagem</a>-->
+                                              <!--<a href="" class="linear-color-bground m-1" ng-class="subitem.TipoResposta == 'Link' ? 'bpurple' : ''" ng-click="ctrl.alternativa('Link', subitem)">Link</a>-->
+                                            </div>
+                                            <div class="row mt-3">
+                                              <div class="col-md-10">
+                                                <span class="linear-color-round lpurple w-100">
+                                                  <textarea style="resize: none" name="RepostaSubmenuTexto{{$submenu}}" required class="txtitem d-block pl-3 w-100" placeholder="Texto descritivo" ng-model="subitem.RespostaTexto" ng-if="subitem.TipoResposta == 'Texto'"></textarea>
+                                                  <!--<input type="file" name="RepostaSubmenuImagem{{$submenu}}" ng-file-select="onFileSelect($files)" required class="txtitem d-block pl-3 pt-1 w-100 d-inline-block" ng-model="subitem.RespostaImagem" ng-if="subitem.TipoResposta == 'Imagem'">-->
+                                                  <!--<input type="url" name="RepostaSubmenuLink{{$submenu}}" required placeholder="http://" class="txtitem d-block pl-3 w-100 d-inline-block" ng-model="subitem.RespostaLink" ng-if="subitem.TipoResposta == 'Link'">-->
+                                                </span>
+                                                <div ng-messages="chatbot['RepostaSubmenuTexto'+$submenu].$error" ng-if="subitem.TipoResposta == 'Texto' && (chatbot['RepostaSubmenuTexto'+$submenu].$dirty || chatbot.$submitted)" class="invalid-feedback">
+                                                  <div ng-message="required">Obrigatório</div>
+                                                </div>
+                                                <!--<div ng-messages="chatbot['RepostaSubmenuImagem'+$submenu].$error" ng-if="subitem.TipoResposta == 'Imagem' && (chatbot['RepostaSubmenuImagem'+$submenu].$dirty || chatbot.$submitted)" class="invalid-feedback">
+                                                  <div ng-message="required">Obrigatório</div>
+                                                  <div ng-message="file">Imagem obrigatória</div>
+                                                </div>-->
+                                                <!--<div ng-messages="chatbot['RepostaSubmenuLink'+$submenu].$error" ng-if="subitem.TipoResposta == 'Link' && (chatbot['RepostaSubmenuLink'+$submenu].$dirty || chatbot.$submitted)" class="invalid-feedback">
+                                                  <div ng-message="required">Obrigatório</div>
+                                                  <div ng-message="url">Link inválido</div>
+                                                </div>-->
+                                                <!--<img class="mt-3 img-fluid" ng-if="subitem.Resposta && subitem.TipoResposta == 'Imagem'" ng-src="{{subitem.Resposta}}" width="300">-->
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </li>
+                                    </ul>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div id="configuracoes" class="tab-pane fade">
+                <button type="button" class="p-0 btn btn-lg btn-link font-weight-bold text-danger" data-toggle="modal" data-target="#modal-tutorial">
+                  <i class="fas fa-play-circle"></i>&nbsp;Como configurar o Chat BOT
+                </button>
+                <hr />
+                <h6 class="font-weight-bold mb-0">Finalizar atendimento</h6>
+                <small>Será acrescentado, automaticamente, o item <strong>Encerrar atendimento</strong> como último item do seu Chatbot</small>
+                <textarea style="resize: none" class="mt-3 w-100 txt" name="TextoEncerrarAtendimento" required ng-model="ctrl.chatbot.TextoEncerrarAtendimento"></textarea>
+                <div ng-messages="chatbot.TextoEncerrarAtendimento.$error" ng-if="chatbot.TextoEncerrarAtendimento.$dirty || chatbot.$submitted" class="invalid-feedback">
+                  <div ng-message="required">Obrigatório</div>
+                </div>
+                <h6 class="font-weight-bold mt-3 mb-0">Opção não encontrada</h6>
+                <small>Informe o texto padrão que será exibido sempre que o Chatbot não encontrar a resposta para o cliente</small>
+                <textarea style="resize: none" class="mt-3 w-100 txt" name="TextoNaoEntendi" required ng-model="ctrl.chatbot.TextoNaoEntendi"></textarea>
+                <div ng-messages="chatbot.TextoNaoEntendi.$error" ng-if="chatbot.TextoNaoEntendi.$dirty || chatbot.$submitted" class="invalid-feedback">
+                  <div ng-message="required">Obrigatório</div>
+                </div>
+              </div>
+              <div id="dicas" class="tab-pane fade">
+                <div class="alert alert-secondary p-5" ng-non-bindable>
+                  <h4 class="alert-heading font-weight-bold text-primary">Comandos Reservados</h4>
+                  <hr />
+                  <p class="mb-4">Durante a edição do ChatBot você poderá utilizar, nas caixas de texto aberto (textos de <strong>apresentação</strong> do menu principal ou submenus, texto de <strong>finalização do atendimento</strong> ou texto de <strong>opção não encontrada</strong>), os comandos abaixo:</p>
+                  <p class="font-italic"><strong class="text-primary">{{username}}</strong> - Captura o usuário do cliente</p>
+                  <p class="font-italic"><strong class="text-primary">{{fullname}}</strong> - Captura o nome do cliente</p>
+                  <p class="font-italic"><strong class="text-primary">\r\n</strong> - Força a quebra de linha de um texto (poderá ser <span class="text-primary">\r\n\n</span>)</p>
+                  <h5 class="alert-heading font-weight-bold pt-4">Exemplos</h5>
+                  <hr />
+                  <p>Olá <strong class="text-primary">{{username}}</strong>. Sou um robô e estou aqui para te auxiliar. Digite o item de seu interesse:</p>
+                  <p class="ml-3 font-italic">Olá <strong class="text-primary">gabriela_mendez</strong>. Sou um robô e estou aqui para te auxiliar. Digite o item de seu interesse:</p>
+                  <p class="mt-4"><strong class="text-primary">{{fullname}}</strong>, foi um prazer falar com você.<strong class="text-primary">\r\n</strong>Volte sempre que quiser!</p>
+                  <p class="ml-3 font-italic"><strong class="text-primary">Gabriela Mendez</strong>, foi um prazer falar com você.<br />Volte sempre que quiser!</p>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div pause-on-close class="modal" tabindex="-1" role="dialog" id="modal-tutorial">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-column">
+                  <button type="button" class="close align-self-end" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="card-body">
+                  <div class="embed-responsive embed-responsive-16by9">
+                    <video class="embed-responsive-item" controls>
+                      <source src="assets/img/chatbot-tutorial.mp4" type="video/mp4">
+                    </video>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

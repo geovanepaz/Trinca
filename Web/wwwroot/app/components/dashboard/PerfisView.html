@@ -1,0 +1,102 @@
+<div class="container-fluid" disable-all="!ctrl.perfilSelecionado.PerfilAtivo">
+  <h1 class="h3 mb-4 text-gray-800"><img src="assets/img/ico-user-group.png" class="mr-2 align-middle">Perfis</h1>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary"><img src="assets/img/ico-user-group.png" class="mr-2 align-bottom">Add Perfil</h6>
+        </div>
+        <div class="card-body">
+          <div class="alert alert-light p-2">
+            <small class="font-weight-bold text-primary">
+              Adicione perfis importantes para atrair mais clientes.<br />Ex: Perfis de concorrentes e parceiros.
+            </small>
+          </div>
+          <form name="frmbuscaperfil" novalidate autocomplete="off">
+            <div class="form-row">
+              <div class="mb-3 col-md-9">
+                <input type="text" class="form-control" name="busca" id="busca" placeholder="Pesquisar perfil" ng-model="ctrl.busca" ng-disabled="ctrl.estaBuscando" required>
+                <div ng-messages="frmbuscaperfil.busca.$error" ng-if="frmbuscaperfil.busca.$dirty || frmbuscaperfil.$submitted" class="invalid-feedback">
+                  <div ng-message="required">Obrigatório</div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <button class="btn btn-primary btn-block linear-color-bground bblue mb-3" id="buscar" ng-disabled="ctrl.estaBuscando" ng-click="ctrl.buscar(frmbuscaperfil)">Buscar</button>
+              </div>
+            </div>
+          </form>
+          <small ng-if="ctrl.perfilEncontrado == ''">Não foi encontrado o perfil com esta informação</small>
+          <hr class="mb-4">
+          <ul class="list-unstyled" ng-if="ctrl.perfilEncontrado">
+            <li class="bgrey pt-3 pl-3 pb-3">
+              <div class="row">
+                <div class="col-md-2">
+                  <img src="{{ctrl.perfilEncontrado.FotoPerfil}}" height="45" class="rounded-circle">
+                </div>
+                <div class="col-md-8">
+                  <span class="d-block font-weight-bold text-dark">@{{ctrl.perfilEncontrado.Usuario}}</span>
+                  <p>
+                    <small class="font-weight-bold">{{ctrl.perfilEncontrado.Nome}}</small>
+                  </p>
+                  <p>
+                    <small>{{ctrl.perfilEncontrado.Biografia}}</small>
+                  </p>
+                </div>
+                <div class="col-md-1">
+                  <a ng-click="ctrl.adicionarPerfil()" title="Adicionar perfil">
+                    <img src="assets/img/ico-mais-sel.png">
+                  </a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 offset-md-2">
+                  <p>
+                    <small>Seguidores: <span class="font-weight-bold">{{ctrl.perfilEncontrado.SeguidoresTotal}}</span></small>
+                  </p>
+                </div>
+                <div class="col-md-4">
+                  <p>
+                    <small>Seguindo: <span class="font-weight-bold">{{ctrl.perfilEncontrado.SeguindoTotal}}</span></small>
+                  </p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 offset-md-2">
+                  <input type="checkbox" name="chkcurtiu" id="chkcurtiu" class="mr-1" ng-model="ctrl.perfilEncontrado.SeguirQuemCurtiu">
+                  <label for="chkcurtiu">
+                    <small class="font-weight-bold text-dark">Seguir quem curtiu</small>
+                  </label>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary"><img src="assets/img/ico-user-group.png" class="mr-2 align-middle">Perfis Adicionados</h6>
+        </div>
+        <div class="card-body">
+          <small ng-if="ctrl.perfisConcorrentes.length == 0">Não foram adicionados perfis ainda</small>
+          <ul class="list-unstyled">
+            <li class="pt-3 pl-3 pb-3" ng-repeat="perfil in ctrl.perfisConcorrentes">
+              <div class="row">
+                <div class="col-md-1">
+                  <a ng-click="ctrl.removerPerfil(perfil.Id)">
+                    <img src="assets/img/ico-cross.png">
+                  </a>
+                </div>
+                <div class="col-md-11">
+                  <span class="d-block font-weight-bold text-dark">@{{perfil.Usuario}}</span>
+                  <small>{{perfil.Nome}} <em ng-if="perfil.SeguirQuemCurtiu == 1">( Seguir quem curtiu )</em></small>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

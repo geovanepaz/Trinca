@@ -1,0 +1,36 @@
+@font-face{font-family:'Open Sans';font-style:italic;font-weight:300;src:local('Open Sans Light Italic'),local('OpenSans-LightItalic'),url(https://fonts.gstatic.com/s/opensans/v16/memnYaGs126MiZpBA-UFUKWyV9hrIqY.ttf) format('truetype')}
+@font-face{font-family:'Open Sans';font-style:normal;font-weight:400;src:local('Open Sans Regular'),local('OpenSans-Regular'),url(https://fonts.gstatic.com/s/opensans/v16/mem8YaGs126MiZpBA-UFVZ0e.ttf) format('truetype')}
+body{font-family:'Open Sans',sans-serif}
+.navbar{background:#efefef;padding-top:15px;padding-bottom:15px}
+.navbar-brand{background:url(../img/logo.png) no-repeat;text-indent:-9999px;width:149px;height:54px}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.invalid-feedback{margin-bottom:10px;display:block}
+form input,form select{border:0 solid transparent!important;border-radius:22px!important;min-height:50px!important}
+tags-input .tags{border:none;border-radius:22px;padding:.375rem .75rem 0}
+tags-input .tags .tag-list{margin-top:7px}
+tags-input .tags .input{margin-top:-10px;background:0 0}
+.linear-color-round{display:block;position:relative;border:0 solid transparent;border-radius:0;background-clip:padding-box;padding:0}
+#frmconfira .linear-color-round,#frmconfira input{width:80px;display:inline-block}
+.linear-color-bground,.linear-color-round::before{background:linear-gradient(to right,#6600d6,#08bdf0)}
+.linear-color-round::before{position:absolute;top:-1px;bottom:-1px;left:-1px;right:-1px;content:'';z-index:-1;border-radius:23px}
+.linear-color-bground{border-radius:22px;border:none}
+.lk-entrar{background-color:#fff;border-radius:22px}
+.bt-plano.active{background:#c4c4c4;border-radius:32px}
+.bt-plano:hover{text-decoration:none}
+#addpw{position:absolute;z-index:1;right:20px;top:43px;cursor:pointer}
+.spinner,.spinner:before{position:fixed;top:0;left:0}
+#frmconfira input{height:100px!important;border-radius:45px!important;font-size:62px;color:#000}
+#frmconfira .linear-color-round::before{border-radius:45px}
+.spinner{width:50px;height:40px;z-index:999;overflow:visible;margin:auto;bottom:0;right:0;display:none}
+.spinner:before{content:'';display:block;width:100%;height:100%;background-image:-webkit-repeating-linear-gradient(135deg,rgba(255,255,255,.5),rgba(255,255,255,.5) 1px,transparent 2px,transparent 2px,rgba(255,255,255,.5) 3px);background-image:-moz-repeating-linear-gradient(135deg,rgba(255,255,255,.5),rgba(255,255,255,.5) 1px,transparent 2px,transparent 2px,rgba(255,255,255,.5) 3px);background-image:-o-repeating-linear-gradient(135deg,rgba(255,255,255,.5),rgba(255,255,255,.5) 1px,transparent 2px,transparent 2px,rgba(255,255,255,.5) 3px);background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.5),rgba(255,255,255,.5) 1px,transparent 2px,transparent 2px,rgba(255,255,255,.5) 3px);-webkit-background-size:4px 4px;-moz-background-size:4px 4px;background-size:4px 4px}
+.spinner>div{background:linear-gradient(to bottom,#6600d6,#08bdf0);height:100px;width:6px;display:inline-block;-webkit-animation:sk-stretchdelay 1.2s infinite ease-in-out;animation:sk-stretchdelay 1.2s infinite ease-in-out;border-radius:10px}
+.spinner .rect2{-webkit-animation-delay:-1.1s;animation-delay:-1.1s}
+.spinner .rect3{-webkit-animation-delay:-1s;animation-delay:-1s}
+.spinner .rect4{-webkit-animation-delay:-.9s;animation-delay:-.9s}
+.spinner .rect5{-webkit-animation-delay:-.8s;animation-delay:-.8s}
+@-webkit-keyframes sk-stretchdelay{0%,100%,40%{-webkit-transform:scaleY(.4)}
+20%{-webkit-transform:scaleY(1)}
+}
+@keyframes sk-stretchdelay{0%,100%,40%{transform:scaleY(.4);-webkit-transform:scaleY(.4)}
+20%{transform:scaleY(1);-webkit-transform:scaleY(1)}
+}

@@ -1,0 +1,108 @@
+<div class="container-fluid" disable-all="!ctrl.perfilSelecionado.PerfilAtivo">
+  <h1 class="h3 mb-4 text-gray-800"><img src="assets/img/ico-hash.png" class="mr-2 align-middle">Hashtags</h1>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary"><img src="assets/img/ico-hash.png" class="mr-2 align-bottom">Add Hashtag</h6>
+        </div>
+        <div class="card-body">
+          <form name="frmhashtag" novalidate autocomplete="off">
+            <div class="alert alert-light p-2">
+              <small class="font-weight-bold text-primary">
+                Hashtags relacionadas ao seu ramo para atrair mais clientes
+              </small>
+            </div>
+            <div class="form-row">
+              <div class="mb-3 col-md-4">
+                <input type="text" class="form-control" name="hash" id="hash" placeholder="hashtag" ng-model="ctrl.hashtag" mask="%" maxlength="30" mask-repeat="30" mask-restrict="reject" mask-clean="true" mask-validate="false" mask-limit="false" required>
+                <div ng-messages="frmhashtag.hash.$error" ng-if="frmhashtag.hash.$dirty || frmhashtag.$submitted" class="invalid-feedback">
+                  <div ng-message="required">Obrigatório</div>
+                </div>
+              </div>
+              <div class="mt-2 col-md-4">
+                <input type="checkbox" name="chkcurtiu" id="chkcurtiu" class="mr-1" ng-model="ctrl.SeguirQuemCurtiu">
+                <label for="chkcurtiu">
+                  <small class="font-weight-bold text-dark">Seguir quem curtiu</small>
+                </label>
+              </div>
+              <div class="col-md-4">
+                <button class="btn btn-primary btn-block linear-color-bground bblue mb-3" ng-click="ctrl.adicionar(frmhashtag, false)">Adicionar</button>
+              </div>
+            </div>
+          </form>
+          <form name="frmblackhashtag" novalidate autocomplete="off">
+            <div class="alert alert-light p-2">
+              <small class="font-weight-bold text-danger">
+                Hashtags que você não aceita ou quer evitar
+              </small>
+            </div>
+            <div class="form-row">
+              <div class="mb-3 col-md-8">
+                <input type="text" class="form-control" name="blackhash" id="blackhash" placeholder="hashtag" ng-model="ctrl.blackhashtag" mask="%" maxlength="30" mask-repeat="30" mask-restrict="reject" mask-clean="true" mask-validate="false" mask-limit="false" required>
+                <div ng-messages="frmblackhashtag.blackhash.$error" ng-if="frmblackhashtag.blackhash.$dirty || frmblackhashtag.$submitted" class="invalid-feedback">
+                  <div ng-message="required">Obrigatório</div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <button class="btn btn-primary btn-block linear-color-bground mb-3" ng-click="ctrl.adicionar(frmblackhashtag, true)">Adicionar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card shadow">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary"><img src="assets/img/ico-hash.png" class="mr-2 align-middle">Hashtags Aceitas</h6>
+        </div>
+        <div class="card-body">
+          <small ng-if="(ctrl.hashtagsAdicionadas | filter: { BlackHashtag: false }).length == 0">Não foram adicionadas hashtags ainda</small>
+          <ul class="list-unstyled">
+            <li class="pt-3 pb-3" ng-repeat="hashtag in ctrl.hashtagsAdicionadas | filter: { BlackHashtag: false }">
+              <div class="row">
+                <div class="col-md-2">
+                  <a ng-click="ctrl.remover(hashtag.Id)">
+                    <img src="assets/img/ico-cross.png">
+                  </a>
+                </div>
+                <div class="col-md-10">
+                  <small>
+                    <span class="font-weight-bold text-dark">#{{hashtag.Hashtag}}</span> <em ng-if="hashtag.SeguirQuemCurtiu == 1">( Seguir quem curtiu )</em>
+                  </small>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card shadow">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-danger"><img src="assets/img/ico-hash.png" class="mr-2 align-middle">Hashtags Recusadas</h6>
+        </div>
+        <div class="card-body">
+          <small ng-if="(ctrl.hashtagsAdicionadas | filter: { BlackHashtag: true }).length == 0">Não foram adicionadas hashtags recusadas ainda</small>
+          <ul class="list-unstyled">
+            <li class="pt-3 pb-3" ng-repeat="hashtag in ctrl.hashtagsAdicionadas | filter: { BlackHashtag: true }">
+              <div class="row">
+                <div class="col-md-2">
+                  <a ng-click="ctrl.remover(hashtag.Id)">
+                    <img src="assets/img/ico-cross.png">
+                  </a>
+                </div>
+                <div class="col-md-10">
+                  <small>
+                    <span class="font-weight-bold text-dark">#{{hashtag.Hashtag}}</span>
+                  </small>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

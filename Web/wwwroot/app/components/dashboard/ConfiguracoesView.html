@@ -1,0 +1,150 @@
+<nav class="navbar bg-danger text-white mb-4 d-block p-3" style="margin-top: -1.5rem !important;" ng-if="!ctrl.configuracaoExistente">
+  <h3 class="font-weight-bold">Atenção!</h3>
+  <h6>Notamos que você ainda não possui nenhuma configuração salva. Configure e salve o seu perfil abaixo para que os nossos robôs trabalhem da melhor maneira para você ;)</h6>
+</nav>
+<div class="container-fluid" disable-all="!ctrl.perfilSelecionado.PerfilAtivo">
+  <h1 class="h3 mb-4 text-gray-800"><img src="assets/img/ico-gear.png" class="mr-2 align-middle">Configurações</h1>
+  <form name="configuracoes" novalidate autocomplete="off">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary"><img src="assets/img/ico-shuffle.png" class="mr-2 align-bottom">Seguir</h6>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-9">
+                <label>Ativo</label>
+              </div>
+              <div class="col-md-3">
+                <toggle ng-model="ctrl.configuracoes.SeguirAtivo" on="Sim" off="Não" size="btn-sm" toggle-class="ios" value="true"></toggle>
+              </div>
+              <hr class="mb-4 mt-4">
+              <div class="col-md-8">
+                <small>Máximo de perfis por dia</small>
+              </div>
+              <div class="col-md-4">
+                <input type="number" min="1" max="999" class="form-control" name="seguirparametro" ng-model="ctrl.configuracoes.SeguirParametro" required>
+                <div ng-messages="configuracoes.seguirparametro.$error" ng-if="configuracoes.seguirparametro.$dirty || configuracoes.$submitted" class="invalid-feedback">
+                  <small ng-message="required">Obrigatório</small>
+                  <small ng-message="min">Mínimo 1</small>
+                  <small ng-message="max">Máximo 999</small>
+                </div>
+              </div>
+            </div>
+            <hr class="border-0" />
+            <div class="row alert alert-danger mb-0" ng-if="ctrl.configuracoes.StatusSeguir == 1 && ctrl.configuracoes.LogSeguir">
+              <small>
+                <div class="m-0 p-0 d-flex flex-row align-items-center justify-content-between">
+                  <b class="m-0 font-weight-bold">ATENÇÃO - Desativamos isto pra você!</b>
+                  <button class="btn btn-link" tooltips tooltip-template="{{ctrl.configuracoes.LogSeguir}}" tooltip-smart="true">
+                    <i class="fas fa-info-circle">&nbsp;</i>
+                  </button>
+                </div>
+                <hr class="m-0 p-0 mb-2" />
+                <p><b ng-if="ctrl.configuracoes.AlteracaoSeguir">{{ctrl.configuracoes.AlteracaoSeguirFormatado}} - </b>{{ctrl.configuracoes.Alerta}}</p>
+                <hr class="m-0 p-0 mb-2" />
+                <p class="font-weight-bold" ng-if="ctrl.configuracoes.AlteracaoSeguir">A ação será reativada automaticamente após {{ctrl.configuracoes.AlteracaoSeguirVoltar}}</p>
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary"><img src="assets/img/ico-photo-group.png" class="mr-2 align-bottom">Postar</h6>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-9">
+                <label>Ativo</label>
+              </div>
+              <div class="col-md-2">
+                <toggle ng-model="ctrl.configuracoes.PostarAtivo" on="Sim" off="Não" size="btn-sm" toggle-class="ios" value="true"></toggle>
+              </div>
+              <hr class="mb-4 mt-4">
+              <div class="col-md-8">
+                <small>Máximo de postagens por dia</small>
+              </div>
+              <div class="col-md-4">
+                <input type="number" min="1" max="999" class="form-control" name="postarparametro" ng-model="ctrl.configuracoes.PostarParametro" required>
+                <div ng-messages="configuracoes.postarparametro.$error" ng-if="configuracoes.postarparametro.$dirty || configuracoes.$submitted" class="invalid-feedback">
+                  <small ng-message="required">Obrigatório</small>
+                  <small ng-message="min">Mínimo 1</small>
+                  <small ng-message="max">Máximo 999</small>
+                </div>
+              </div>
+            </div>
+            <hr class="border-0" />
+            <div class="row alert alert-danger mb-0" ng-if="ctrl.configuracoes.StatusPostar == 1 && ctrl.configuracoes.LogPostar">
+              <small>
+                <div class="m-0 p-0 d-flex flex-row align-items-center justify-content-between">
+                  <b class="m-0 font-weight-bold">ATENÇÃO - Desativamos isto pra você!</b>
+                  <button class="btn btn-link" tooltips tooltip-template="{{ctrl.configuracoes.LogPostar}}" tooltip-smart="true">
+                    <i class="fas fa-info-circle">&nbsp;</i>
+                  </button>
+                </div>
+                <hr class="m-0 p-0 mb-2" />
+                <p><b ng-if="ctrl.configuracoes.AlteracaoPostar">{{ctrl.configuracoes.AlteracaoPostarFormatado}} - </b>{{ctrl.configuracoes.Alerta}}</p>
+                <hr class="m-0 p-0 mb-2" />
+                <p class="font-weight-bold" ng-if="ctrl.configuracoes.AlteracaoPostar">A ação será reativada automaticamente após {{ctrl.configuracoes.AlteracaoPostarVoltar}}</p>
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary"><img src="assets/img/ico-minus.png" class="mr-2 align-bottom"> Deixar de seguir</h6>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-9">
+                <label>Ativo</label>
+              </div>
+              <div class="col-md-2">
+                <toggle ng-model="ctrl.configuracoes.PararSeguirAtivo" on="Sim" off="Não" size="btn-sm" toggle-class="ios" value="true"></toggle>
+              </div>
+              <hr class="mb-4 mt-4">
+              <div class="col-md-8">
+                <label class="small">Parar de seguir quem não me segue após (em dias)</label>
+              </div>
+              <div class="col-md-4">
+                <input type="number" min="1" max="999" class="form-control" name="pararseguirparametro" ng-model="ctrl.configuracoes.PararSeguirParametro" required>
+                <div ng-messages="configuracoes.pararseguirparametro.$error" ng-if="configuracoes.pararseguirparametro.$dirty || configuracoes.$submitted" class="invalid-feedback">
+                  <small ng-message="required">Obrigatório</small>
+                  <small ng-message="min">Mínimo 1</small>
+                  <small ng-message="max">Máximo 999</small>
+                </div>
+              </div>
+            </div>
+            <hr class="border-0" />
+            <div class="row alert alert-danger mb-0" ng-if="ctrl.configuracoes.StatusPararSeguir == 1 && ctrl.configuracoes.LogPararSeguir">
+              <small>
+                <div class="m-0 p-0 d-flex flex-row align-items-center justify-content-between">
+                  <b class="m-0 font-weight-bold">ATENÇÃO - Desativamos isto pra você!</b>
+                  <button class="btn btn-link" tooltips tooltip-template="{{ctrl.configuracoes.LogPararSeguir}}" tooltip-smart="true">
+                    <i class="fas fa-info-circle">&nbsp;</i>
+                  </button>
+                </div>
+                <hr class="m-0 p-0 mb-2" />
+                <p><b ng-if="ctrl.configuracoes.AlteracaoPararSeguir">{{ctrl.configuracoes.AlteracaoPararSeguirFormatado}} - </b>{{ctrl.configuracoes.Alerta}}</p>
+                <hr class="m-0 p-0 mb-2" />
+                <p ng-if="ctrl.configuracoes.AlteracaoPararSeguir" class="font-weight-bold">A ação será reativada automaticamente após {{ctrl.configuracoes.AlteracaoPararSeguirVoltar}}</p>
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="card mb-4 border-0" style="background: none;">
+          <button class="btn btn-primary btn-lg btn-block linear-color-bground bgreen mb-3" ng-click="ctrl.salvarConfiguracao(configuracoes)">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

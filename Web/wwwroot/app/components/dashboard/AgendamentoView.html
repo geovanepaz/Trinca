@@ -1,0 +1,112 @@
+<div class="container-fluid" disable-all="!ctrl.perfilSelecionado.PerfilAtivo">
+  <h1 class="h3 mb-4 text-gray-800">
+    <img src="assets/img/ico-photo-group.png" class="mr-2 align-middle">
+    Agendar Postagem
+    <span class="badge badge-danger" ng-if="ctrl.postagem.Status == 'Sucesso'">ENVIADO</span>
+  </h1>
+  <form name="postagemform" novalidate autocomplete="off">
+    <div class="row">
+      <div class="col-md-9">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary"><img src="assets/img/ico-photo-group.png" class="mr-2 align-bottom">Agendar Postagem</h6>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-5">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Postar nos stories</label>
+                  </div>
+                  <div class="col-md-3">
+                    <toggle ng-model="ctrl.postagem.PostarNoStories" on="Sim" off="Não" size="btn-sm" toggle-class="ios" value="true"></toggle>
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-12">
+                    <label for="file-input" class="pointer">
+                      <img ng-src="{{ctrl.postagem.Imagem == '' ? 'assets/img/img-photo.png' : ctrl.postagem.Imagem}}" class="img-fluid">
+                      <input class="d-none" id="file-input" name="imagem" type="file" ng-file-select="onFileSelect($files)" ng-model="ctrl.postagem.Imagem" required>
+                    </label>
+                    <div ng-messages="postagemform.imagem.$error" ng-if="postagemform.imagem.$dirty || postagemform.$submitted" class="invalid-feedback">
+                      <div ng-message="required">Obrigatório</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7">
+                <div class="row">
+                  <div class="col-md-12">
+                    <label for="adicionemsg" class="">Adicione uma descrição para sua postagem</label>
+                    <textarea autogrow type="text" class="form-control" name="descricao" id="adicionemsg" placeholder="" ng-model="ctrl.postagem.Descricao" ng-trim="false" maxlength="1000" required></textarea>
+                    <div class="row">
+                      <div class="col-md-11">
+                        <div ng-messages="postagemform.descricao.$error" ng-if="postagemform.descricao.$dirty || postagemform.$submitted" class="invalid-feedback">
+                          <div ng-message="required">Obrigatório</div>
+                          <div ng-message="maxlength">Máximo 1000 caracteres</div>
+                        </div>
+                      </div>
+                      <div class="col-md-1">
+                        <small class="float-right">{{1000 - ctrl.postagem.Descricao.length}}</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-6">
+                    <label for="horario">Horário</label>
+                    <input id="horario" name="horario" ng-model="ctrl.postagem.Hora" moment-picker="ctrl.postagem.Hora" format="HH:mm" show-header="false" locale="pt-br" class="text-center form-control" required readonly>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="data">Data</label>
+                    <input id="data" name="data" ng-model="ctrl.postagem.Data" moment-picker="ctrl.postagem.Data" format="DD/MM/YYYY" locale="pt-br" min-date="ctrl.postagem.DataMinima" max-date="ctrl.postagem.DataMaxima" validate="true" class="text-center form-control" required readonly>
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-12">
+                    <small class="text-danger font-weight-bold">IMPORTANTE: Leve em consideração o horário de Brasília</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-4">
+                <label>Agendar primeiro comentário</label>
+              </div>
+              <div class="col-md-2">
+                <toggle ng-model="ctrl.postagem.AgendarPrimeiroComentario" on="Sim" off="Não" size="btn-sm" toggle-class="ios" value="true"></toggle>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col">
+                <textarea autogrow class="form-control" name="comentario" placeholder="" ng-model="ctrl.postagem.PrimeiroComentario" maxlength="500" ng-trim="false" ng-disabled="!ctrl.postagem.AgendarPrimeiroComentario" ng-required="ctrl.postagem.AgendarPrimeiroComentario"></textarea>
+                <div class="row">
+                  <div class="col-md-11">
+                    <div ng-messages="postagemform.comentario.$error" ng-if="postagemform.comentario.$dirty || postagemform.$submitted" class="invalid-feedback">
+                      <div ng-message="required">Obrigatório</div>
+                      <div ng-message="maxlength">Máximo 500 caracteres</div>
+                    </div>
+                  </div>
+                  <div class="col-md-1">
+                    <small class="float-right">{{500 - ctrl.postagem.PrimeiroComentario.length}}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card shadow mb-4">
+          <div class="card-body">
+            <button class="btn btn-primary btn-lg btn-block linear-color-bground bgreen mb-3" ng-disabled="ctrl.postagem.Status == 'Sucesso'" ng-click="ctrl.agendar(postagemform)">{{ctrl.atualizacao ? 'Atualizar' : 'Agendar'}}</button>
+            <button class="btn btn-primary btn-md btn-block linear-color-bground bgreen mb-3" ng-if="ctrl.atualizacao" ng-click="ctrl.novo()">Novo Agendamento</button>
+            <a ui-sref="dashboard.postagens" class="linear-color-bground text-uppercase text-white d-block text-center bblue mb-3"><small>Visualizar Postagens</small></a>
+            <a ui-sref="dashboard.comentarios" class="linear-color-bground text-uppercase text-white d-block text-center bblue mb-3"><small>Visualizar Comentários</small></a>
+            <a ui-sref="dashboard.postagens" class="linear-color-bground text-uppercase text-white d-block text-center p-2"><small>Postagens Pendentes <span class="white-circle ml-2">{{ctrl.pendentes}}</span></small></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

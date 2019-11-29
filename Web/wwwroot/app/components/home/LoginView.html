@@ -1,0 +1,43 @@
+<div ui-view>
+  <div class="py-5 text-center">
+    <h1 class="display-4">Bem-vindo ao <strong class="font-weight-bold">Studio4Gram</strong></h1>
+    <span class="h2 d-block">Faça login com a sua conta para continuar.</span>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-5 order-md-1">
+      <form name="cadastroform" novalidate autocomplete="off">
+
+        <div class="mb-3">
+          <label class="font-weight-bold">E-mail:</label>
+          <span class="linear-color-round">
+            <input type="email" class="form-control" name="usuario" placeholder="E-mail" required ng-model="home.login.Email">
+          </span>
+          <div ng-messages="cadastroform.usuario.$error" ng-if="cadastroform.usuario.$dirty || cadastroform.$submitted" class="invalid-feedback">
+            <div ng-message="required">Obrigatório</div>
+            <div ng-message="email">Precisa ser um e-mail válido</div>
+          </div>
+        </div>
+
+        <div class="mb-3 position-relative">
+          <label class="font-weight-bold">Senha:</label>
+          <div id="addpw" class="input-group-addon">
+            <i id="eye" class="fa fa-eye-slash" ng-click="home.showHidePassword('senha','eye')"></i>
+          </div>
+          <span class="linear-color-round">
+            <input type="password" class="form-control" id="senha" name="senha" placeholder="*****" required ng-model="home.login.Senha">
+          </span>
+          <div ng-messages="cadastroform.senha.$error" ng-if="cadastroform.senha.$dirty || cadastroform.$submitted" class="invalid-feedback">
+            <div ng-message="required">Obrigatório</div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-lg btn-block linear-color-bground mb-3 mt-4" type="submit" ng-click="home.logar(cadastroform)">Acessar</button>
+
+        <span class="linear-color-round">
+          <a href="" class="btn-block text-center text-dark lk-entrar pb-1 pt-1" ng-click="home.recuperarSenha()">Esqueci minha senha</a>
+        </span>
+
+      </form>
+    </div>
+  </div>
+</div>

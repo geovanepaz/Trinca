@@ -1,0 +1,89 @@
+<div ui-view>
+  <div class="py-5 text-center">
+    <h1 class="display-4">Cadastre-se</h1>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-5 order-md-1">
+      <form name="cadastroform" novalidate autocomplete="off">
+        <div class="mb-3">
+          <label for="firstName" class="font-weight-bold">Primeiro nome</label>
+          <span class="linear-color-round">
+            <input type="text" class="form-control" name="nome" placeholder="Primeiro nome" ng-model="home.cadastro.Nome" required ng-maxlength="50" ng-minlength="2">
+          </span>
+          <div ng-messages="cadastroform.nome.$error" ng-if="cadastroform.nome.$dirty || cadastroform.$submitted" class="invalid-feedback">
+            <div ng-message="required">Obrigatório</div>
+            <div ng-message="minlength">Mínimo 2 caracteres</div>
+            <div ng-message="maxlength">Máximo 50 caracteres</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="font-weight-bold">E-mail</label>
+          <span class="linear-color-round">
+            <input type="email" class="form-control" name="email" placeholder="E-mail" ng-model="home.cadastro.Email" required ng-readonly="true">
+          </span>
+          <div ng-messages="cadastroform.email.$error" ng-if="cadastroform.email.$dirty || cadastroform.$submitted" class="invalid-feedback">
+            <div ng-message="required">Obrigatório</div>
+            <div ng-message="email">Precisa ser um e-mail válido</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="atividade" class="font-weight-bold">Qual o seu ramo de atividade?</label>
+          <span class="linear-color-round">
+            <select class="custom-select d-block w-100" name="atividade" required ng-model="home.cadastro.IdRamoAtividade">
+              <option value="">-- Selecione --</option>
+              <option ng-repeat="ramo in home.ramosAtividades" value="{{ramo.Id}}">{{ramo.Descricao}}</option>
+            </select>
+          </span>
+          <div ng-messages="cadastroform.atividade.$error" ng-if="cadastroform.atividade.$dirty || cadastroform.$submitted" class="invalid-feedback">
+            <div ng-message="required">Obrigatório</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="celular" class="font-weight-bold">Celular</label>
+          <span class="linear-color-round">
+            <input type="text" class="form-control" name="celular" ng-model="home.cadastro.Celular" mask="(99) 9? 9999-9999" clean="true" placeholder="(xx) x xxx-xxxx" required>
+          </span>
+          <div ng-messages="cadastroform.celular.$error" ng-if="cadastroform.celular.$dirty || cadastroform.$submitted" class="invalid-feedback">
+            <div ng-message="required">Obrigatório</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="senha" class="font-weight-bold">Senha</label>
+          <span class="linear-color-round">
+            <input type="password" class="form-control" name="senha" placeholder="Senha" required ng-model="home.cadastro.Senha" ng-maxlength="32" ng-minlength="6">
+          </span>
+          <div ng-messages="cadastroform.senha.$error" ng-if="cadastroform.senha.$dirty || cadastroform.$submitted" class="invalid-feedback">
+            <div ng-message="required">Obrigatório</div>
+            <div ng-message="minlength">Mínimo 6 caracteres</div>
+            <div ng-message="maxlength">Máximo 32 caracteres</div>
+          </div>
+        </div>
+        <div class="mb-3" class="font-weight-bold">
+          <label class="font-weight-bold">Repetir senha</label>
+          <span class="linear-color-round">
+            <input type="password" class="form-control" name="confirmasenha" placeholder="Repetir senha" required ng-model="home.cadastro.ConfirmaSenha" compare-to="home.cadastro.Senha">
+          </span>
+          <div ng-messages="cadastroform.confirmasenha.$error" ng-if="cadastroform.confirmasenha.$dirty || cadastroform.$submitted" class="invalid-feedback">
+            <div ng-message="required">Obrigatório</div>
+            <div ng-message="compareTo">As senhas não conferem</div>
+          </div>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="aceite" name="aceite" ng-model="home.cadastro.Aceite" required>
+          <label class="custom-control-label font-italic" for="aceite">Eu concordo com os <a href="assets/files/termos_aceite.pdf" target="_blank">Termos de aceite</a></label>
+        </div>
+        <div ng-messages="cadastroform.aceite.$error" ng-if="cadastroform.aceite.$dirty || cadastroform.$submitted" class="invalid-feedback">
+          <div ng-message="required">Obrigatório</div>
+        </div>
+        <hr class="mb-4">
+        <button class="btn btn-primary btn-lg btn-block linear-color-bground mb-3" type="submit" ng-click="home.cadastrar(cadastroform)">Cadastrar</button>
+      </form>
+      <span class="linear-color-round">
+        <a href="" class="btn-block text-center text-dark lk-entrar pb-1 pt-1">
+          <img src="assets/img/entrar.png" class="mr-2" />
+          Entrar com uma conta já existente
+        </a>
+      </span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,97 @@
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" ng-if="Topo.perfilFoiSelecionado">
+  <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+    <i class="fa fa-bars"></i>
+  </button>
+  <div class="d-none d-lg-block d-xl-block w-100">
+    <div class="row w-100">
+      <div class="col-md-2">
+        <span class="d-block dark mt-3">@{{Topo.Usuario}}</span>
+      </div>
+      <div class="col">
+        <small class="d-block dark mt-1">Início: {{Topo.DataInicio | date: 'dd/MM/yyyy'}}</small>
+        <small class="d-block dark text-danger">
+          Expira em: {{Topo.DataExpiracao | date: 'dd/MM/yyyy'}}&nbsp;
+          <span ng-if="!Topo.PerfilAtivo" class="p-1 badge badge-danger font-weight-bold">{{Topo.NomePlano|uppercase}} - EXPIRADO</span>
+          <span ng-if="Topo.PerfilAtivo" class="p-1 badge badge-success font-weight-bold">{{Topo.NomePlano|uppercase}} - ATIVO</span>
+          <timer style="display: none;" ng-if="Topo.TempoPlanoRestante" countdown="Topo.TempoPlanoRestante" interval="1000" finish-callback="Topo.callbackExpiracaoPlano()">
+            {{days}} days, {{hours}} hours, {{minutes}} minutes, {{seconds}} seconds.
+          </timer>
+        </small>
+      </div>
+      <div class="col-md-3 text-center">
+        <span class="font-weight-bold d-block dark">Seguidores</span>
+        <span class="dark">{{Topo.SeguidoresTotal}}</span>
+      </div>
+      <div class="col-md-3 text-center">
+        <span class="font-weight-bold d-block dark">Seguindo</span>
+        <span class="dark">{{Topo.SeguindoTotal}}</span>
+      </div>
+    </div>
+  </div>
+  <ul class="navbar-nav ml-auto">
+    <div class="topbar-divider d-none d-sm-block"></div>
+    <li class="nav-item dropdown no-arrow">
+      <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{Topo.Nome}}</span>
+        <img class="img-profile rounded-circle" src="{{Topo.FotoPerfil}}">
+      </a>
+      <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+        <a class="dropdown-item" ng-click="Topo.exibirPerfis()">
+          <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+          Trocar perfil
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" ng-click="Topo.sair()">
+          <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+          Sair
+        </a>
+      </div>
+    </li>
+  </ul>
+</nav>
+
+<nav class="navbar bg-danger text-white mb-4 d-block p-3" style="margin-top: -1.5rem !important;" ng-if="Topo.perfilFoiSelecionado && !Topo.PerfilAtivo">
+  <h3 class="font-weight-bold">Atenção!</h3>
+  <h6>Seu perfil está expirado. Acesse <u><b><a ui-sref="dashboard.minhaconta" class="text-white">Minha conta</a></b></u> para contratar um novo plano ou <u><b><a ui-sref="dashboard.gerenciarperfis" class="text-white">renove alguma contratação</a></b></u>.</h6>
+</nav>
+
+<div class="modal" tabindex="-1" role="dialog" id="mdlinicial">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <div class="card shadow mb-4">
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Qual perfil você deseja gerenciar?</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-if="Topo.podeFecharModal">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="card-body">
+
+                <div class="alert alert-danger" ng-if="Topo.perfil.length == 0">
+                  Você não possui nenhum perfil Instagram vinculado à sua conta. É necessário adicionar um perfil para poder prosseguir.
+                </div>
+
+                <div class="list-group" ng-if="Topo.perfil.length != 0">
+                  <a class="list-group-item list-group-item-action" ng-class="{disabled: perfil.Usuario == Topo.perfilSelecionado.Usuario}" ng-repeat="perfil in Topo.autenticacao.Perfil | filter: {IdPerfil: '!!'}" ng-click="Topo.selecionarPerfil(perfil)">
+                    <div class="row">
+                      <div class="col-md-1">
+                        <img src="{{perfil.FotoPerfil}}" class="rounded-circle" height="40" />
+                      </div>
+                      <div class="col-md-9 pl-3 font-weight-bold text-dark ml-2 mt-2">
+                        @{{perfil.Usuario}}
+                      </div>
+                      <div class="col-md-1 pt-2" ng-if="perfil.Usuario == Topo.perfilSelecionado.Usuario"><i class="fas fa-check text-success"></i></div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

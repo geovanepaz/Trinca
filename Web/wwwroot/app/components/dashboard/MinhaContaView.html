@@ -1,0 +1,441 @@
+<div class="container-fluid">
+  <h1 class="h3 mb-4 text-gray-800"><img src="assets/img/ico-user.png" class="mr-2 align-middle" />Minha conta</h1>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary"><img src="assets/img/ico-document-edit.png" class="mr-2 align-bottom" /> Meus dados</h6>
+        </div>
+        <div class="card-body">
+          <form name="cadastroform" novalidate autocomplete="off">
+            <div class="form-row">
+              <div class="mb-3 col">
+                <label class="font-weight-bold">Nome</label>
+                <input type="text" class="form-control" placeholder="Nome" name="nome" ng-model="ctrl.conta.Nome" required ng-maxlength="50" ng-minlength="2">
+                <div ng-messages="cadastroform.nome.$error" ng-if="cadastroform.nome.$dirty || cadastroform.$submitted" class="invalid-feedback">
+                  <div ng-message="required">Obrigatório</div>
+                  <div ng-message="minlength">Mínimo 2 caracteres</div>
+                  <div ng-message="maxlength">Máximo 50 caracteres</div>
+                </div>
+              </div>
+              <div class="mb-3 col">
+                <label class="font-weight-bold">Sobrenome</label>
+                <input type="text" class="form-control" name="sobrenome" placeholder="Sobrenome" ng-model="ctrl.conta.Sobrenome" required ng-maxlength="50" ng-minlength="2">
+                <div ng-messages="cadastroform.sobrenome.$error" ng-if="cadastroform.sobrenome.$dirty || cadastroform.$submitted" class="invalid-feedback">
+                  <div ng-message="required">Obrigatório</div>
+                  <div ng-message="minlength">Mínimo 2 caracteres</div>
+                  <div ng-message="maxlength">Máximo 50 caracteres</div>
+                </div>
+              </div>
+            </div>
+            <div class="mb-3 form-group">
+              <label class="font-weight-bold">E-mail</label>
+              <input type="email" class="form-control" name="email" placeholder="E-mail" ng-model="ctrl.conta.Email" ng-readonly="true">
+            </div>
+            <div class="form-row">
+              <div class="mb-3 col">
+                <label class="font-weight-bold">Celular</label>
+                <input type="text" class="form-control" name="celular" mask="(99) 9? 9999-9999" clean="true" restrict="reject" placeholder="(xx) x xxx-xxxx" ng-model="ctrl.conta.Celular" required>
+                <div ng-messages="cadastroform.celular.$error" ng-if="cadastroform.celular.$dirty || cadastroform.$submitted" class="invalid-feedback">
+                  <div ng-message="required">Obrigatório</div>
+                </div>
+              </div>
+              <div class="mb-3 col">
+                <label class="font-weight-bold">Ramo de atividade</label>
+                <select class="custom-select d-block w-100" name="ramoatividade" required ng-model="ctrl.conta.IdRamoAtividade">
+                  <option value="">-- Selecione --</option>
+                  <option ng-repeat="ramo in ctrl.ramosAtividades" value="{{ramo.Id}}">{{ramo.Descricao}}</option>
+                </select>
+                <div ng-messages="cadastroform.ramoatividade.$error" ng-if="cadastroform.ramoatividade.$dirty || cadastroform.$submitted" class="invalid-feedback">
+                  <div ng-message="required">Obrigatório</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="mb-3 col-md-10">
+                <label class="font-weight-bold">Endereço</label>
+                <input type="text" class="form-control" name="endereco" ng-model="ctrl.conta.Endereco" required>
+                <div ng-messages="cadastroform.endereco.$error" ng-if="cadastroform.endereco.$dirty || cadastroform.$submitted" class="invalid-feedback">
+                  <div ng-message="required">Obrigatório</div>
+                </div>
+              </div>
+              <div class="mb-3 col-md-2">
+                <label class="font-weight-bold">Número</label>
+                <input type="text" class="form-control" name="numero" mask="9?9?9?9" clean="true" restrict="reject" ng-model="ctrl.conta.Numero" required>
+                <div ng-messages="cadastroform.numero.$error" ng-if="cadastroform.numero.$dirty || cadastroform.$submitted" class="invalid-feedback">
+                  <div ng-message="required">Obrigatório</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="mb-3 col-md-9">
+                <label class="font-weight-bold">Bairro</label>
+                <input type="text" class="form-control" name="bairro" ng-model="ctrl.conta.Bairro" required>
+                <div ng-messages="cadastroform.bairro.$error" ng-if="cadastroform.bairro.$dirty || cadastroform.$submitted" class="invalid-feedback">
+                  <div ng-message="required">Obrigatório</div>
+                </div>
+              </div>
+              <div class="mb-3 col-md-3">
+                <label class="font-weight-bold">CEP</label>
+                <input type="text" class="form-control" name="cep" ng-model="ctrl.conta.Cep" mask="99999-999" clean="true" restrict="reject" required>
+                <div ng-messages="cadastroform.cep.$error" ng-if="cadastroform.cep.$dirty || cadastroform.$submitted" class="invalid-feedback">
+                  <div ng-message="required">Obrigatório</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="mb-3 col-md-9">
+                <label class="font-weight-bold">Cidade</label>
+                <input type="text" class="form-control" name="cidade" ng-model="ctrl.conta.Cidade" required>
+                <div ng-messages="cadastroform.cidade.$error" ng-if="cadastroform.cidade.$dirty || cadastroform.$submitted" class="invalid-feedback">
+                  <div ng-message="required">Obrigatório</div>
+                </div>
+              </div>
+              <div class="mb-3 col-md-3">
+                <label class="font-weight-bold">UF</label>
+                <input type="text" class="form-control" name="estado" ng-model="ctrl.conta.Estado" mask="@" repeat="2" clean="true" restrict="reject" required>
+                <div ng-messages="cadastroform.estado.$error" ng-if="cadastroform.estado.$dirty || cadastroform.$submitted" class="invalid-feedback">
+                  <div ng-message="required">Obrigatório</div>
+                </div>
+              </div>
+            </div>
+            <hr class="mb-4">
+            <div class="form-row">
+              <div class="col">
+                <button class="btn btn-primary btn-lg btn-block linear-color-bground bpurple mb-3" ng-click="ctrl.modalAlterarSenha()">Alterar senha</button>
+              </div>
+              <div class="col">
+                <button class="btn btn-primary btn-lg btn-block linear-color-bground bgreen mb-3" ng-click="ctrl.atualizarCadastro(cadastroform)">Salvar</button>
+              </div>
+            </div>
+            <hr class="mb-4">
+          </form>
+          <button class="btn btn-primary btn-lg btn-block linear-color-bground mb-3" type="submit" ng-click="ctrl.modalCancelarAssinatura()">Cancelar Assinatura</button>
+        </div>
+      </div>
+    </div>
+    <!-- Minhas contas -->
+    <div class="col-md-6">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary"><img src="assets/img/ico-user-group.png" class="mr-2 align-middle" />Minhas contas</h6>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col text-center">
+              <span class="d-block h3 font-weight-bold">Perfis</span>
+              <span class="d-block h1 font-weight-bold text-dark">{{(ctrl.contratacoes | filter: { IdPerfil: '!!' }).length}}</span>
+              <button class="btn btn-primary btn-lg btn-block linear-color-bground bgreen mb-3" type="submit" ng-click="ctrl.modalAdicionarPerfil()">+ Adicionar perfil</button>
+            </div>
+            <div class="col text-center">
+              <span class="d-block h3 font-weight-bold">Planos</span>
+              <span class="d-block h1 font-weight-bold text-dark">{{ctrl.contratacoes.length}}</span>
+              <button class="btn btn-primary btn-lg btn-block linear-color-bground bgreen mb-3" type="submit" ng-click="ctrl.modalContratar(cadastroform)">+ Adicionar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal" tabindex="-1" role="dialog" id="modal-senha">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Alteração de senha</h6>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="card-body">
+                  <form name="senhaform" novalidate autocomplete="off">
+                    <div class="form-row">
+                      <div class="mb-3 col">
+                        <label class="font-weight-bold">Senha atual</label>
+                        <input type="password" class="form-control" placeholder="Senha atual" name="senhaAtual" ng-model="ctrl.conta.Senha" required ng-maxlength="32" ng-minlength="6">
+                        <div ng-messages="senhaform.senhaAtual.$error" ng-if="senhaform.senhaAtual.$dirty || senhaform.$submitted" class="invalid-feedback">
+                          <div ng-message="required">Obrigatório</div>
+                          <div ng-message="minlength">Mínimo 6 caracteres</div>
+                          <div ng-message="maxlength">Máximo 32 caracteres</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="mb-3 col">
+                        <label class="font-weight-bold">Nova senha</label>
+                        <input type="password" class="form-control" placeholder="Nova senha" name="novasenha" ng-model="ctrl.conta.NovaSenha" required ng-maxlength="32" ng-minlength="6">
+                        <div ng-messages="senhaform.novasenha.$error" ng-if="senhaform.novasenha.$dirty || senhaform.$submitted" class="invalid-feedback">
+                          <div ng-message="required">Obrigatório</div>
+                          <div ng-message="minlength">Mínimo 6 caracteres</div>
+                          <div ng-message="maxlength">Máximo 32 caracteres</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="mb-3 col">
+                        <label class="font-weight-bold">Repetir nova senha</label>
+                        <input type="password" class="form-control" placeholder="Nova senha" name="confirmasenha" ng-model="ctrl.conta.ConfirmaSenha" required compare-to="ctrl.conta.NovaSenha">
+                        <div ng-messages="senhaform.confirmasenha.$error" ng-if="senhaform.confirmasenha.$dirty || senhaform.$submitted" class="invalid-feedback">
+                          <div ng-message="required">Obrigatório</div>
+                          <div ng-message="compareTo">As senhas não conferem</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="col">
+                        <button class="btn btn-primary btn-lg btn-block linear-color-bground bgreen mb-3" ng-click="ctrl.alterarSenha(senhaform)">Salvar</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal" tabindex="-1" role="dialog" id="modal-contratar">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Escolha um de nossos planos</h6>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="card-body">
+                  <div ng-if="ctrl.etapaAssinatura == 1">
+                    <div class="row justify-content-center">
+                      <div class="col-md-4 text-center pb-4" ng-repeat="plano in ctrl.planos">
+                        <a href="" class="d-block text-dark p-3 bt-plano" ng-class="ctrl.planoSelecionado == plano ? 'active' : ''" ng-click="ctrl.planoSelecionado=plano">
+                          <div class="linear-color-bground bblue text-center pt-3 pb-3">
+                            <span class="d-block text-white font-weight-bold display-3">{{plano.Periodo}}</span>
+                            <span class="d-block text-white font-weight-bold h3" ng-if="plano.TipoPeriodo == 0">{{ plano.Periodo == 1 ? "Dia" : "Dias" }}</span>
+                            <span class="d-block text-white font-weight-bold h3" ng-if="plano.TipoPeriodo == 1">{{ plano.Periodo == 1 ? "Mês" : "Meses" }}</span>
+                          </div>
+                          <span class="d-block font-weight-bold h5 mt-2 mb-1">Plano {{plano.Nome}}</span>
+                          <span class="d-block h5 mt-0">por apenas</span>
+                          R$ <span class="display-4">{{plano.ValorInteiro}}</span>,<span class="h4">{{plano.ValorFracao}}</span>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="row justify-content-center">
+                      <div class="col-md-1"></div>
+                      <div class="col-md-7">
+                        <button class="btn btn-primary btn-lg btn-block linear-color-bground bgreen mb-3" type="submit" ng-click="ctrl.etapaAssinatura = 2">Continuar</button>
+                      </div>
+                      <div class="col-md-1"></div>
+                    </div>
+                  </div>
+                  <div ng-if="ctrl.etapaAssinatura == 2">
+                    <form name="pagamentoform" novalidate autocomplete="off">
+                      <div class="row mb-3 justify-content-center">
+                        <div class="col-md-10">
+                          <div class="form-group row">
+                            <div class="col-md-12 mb-4 text-center">
+                              <img src="assets/img/bandeiras-cartoes.png" />
+                            </div>
+                            <div class="col-12 mb-3">
+                              <label class="font-weight-bold">Número do Cartão</label>
+                              <input type="text" class="form-control" name="numerocartao" mask="9" repeat="16" clean="true" restrict="reject" ng-model="ctrl.pagamento.NumeroCartao" cc-number cc-eager-type required>
+                              <div ng-messages="pagamentoform.numerocartao.$error" ng-if="pagamentoform.numerocartao.$dirty || pagamentoform.$submitted || pagamentoform.numerocartao.$invalid && pagamentoform.numerocartao.$ccEagerType" class="invalid-feedback">
+                                <div ng-message="required">Obrigatório</div>
+                                <div ng-message="ccNumber">Número inválido</div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 mb-3">
+                              <label class="font-weight-bold">Nome do titular</label>
+                              <input type="text" class="form-control" name="nomecartao" ng-model="ctrl.pagamento.NomeCartao" placeholder="Nome impresso no cartão" required>
+                              <div ng-messages="pagamentoform.nomecartao.$error" ng-if="pagamentoform.nomecartao.$dirty || pagamentoform.$submitted" class="invalid-feedback">
+                                <div ng-message="required">Obrigatório</div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 mb-3">
+                              <label class="font-weight-bold">CPF do titular</label>
+                              <input type="text" class="form-control" name="cpfcartao" mask="999.999.999-99" clean="true" restrict="reject" ng-model="ctrl.pagamento.CpfCartao" placeholder="Para emissão da nota fiscal" maxlength="14" required>
+                              <div ng-messages="pagamentoform.cpfcartao.$error" ng-if="pagamentoform.cpfcartao.$dirty || pagamentoform.$submitted" class="invalid-feedback">
+                                <div ng-message="required">Obrigatório</div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 mb-3 mb-sm-0">
+                              <label class="font-weight-bold">Data de Expiração</label>
+                              <div class="row">
+                                <div class="col-6">
+                                  <select class="form-control" name="mesexpiracao" ng-model="ctrl.pagamento.MesExpiracao" cc-exp-month required>
+                                    <option value="">-- Mês --</option>
+                                    <option ng-repeat="mes in ctrl.meses" value="{{mes.mes}}">{{mes.mes}} | {{mes.nome}}</option>
+                                  </select>
+                                  <div ng-messages="pagamentoform.mesexpiracao.$error" ng-if="pagamentoform.mesexpiracao.$dirty || pagamentoform.$submitted" class="invalid-feedback">
+                                    <div ng-message="required">Obrigatório</div>
+                                    <div ng-message="ccExpMonth">Inválido</div>
+                                  </div>
+                                </div>
+                                <div class="col-6">
+                                  <select class="form-control" name="anoexpiracao" cc-exp-year required ng-model="ctrl.pagamento.AnoExpiracao">
+                                    <option value="">-- Ano --</option>
+                                    <option ng-repeat="ano in ctrl.anos" value="{{ano.resumido}}">{{ano.completo}}</option>
+                                  </select>
+                                  <div ng-messages="pagamentoform.anoexpiracao.$error" ng-if="pagamentoform.anoexpiracao.$dirty || pagamentoform.$submitted" class="invalid-feedback">
+                                    <div ng-message="required">Obrigatório</div>
+                                    <div ng-message="ccExpYear">Inválido</div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 mb-3">
+                              <label class="font-weight-bold">Cód. de segurança</label>
+                              <input type="text" class="form-control" ng-model="ctrl.pagamento.CodigoSeguranca" name="codigoseguranca" cc-cvc required maxlength="4">
+                              <div ng-messages="pagamentoform.codigoseguranca.$error" ng-if="pagamentoform.codigoseguranca.$dirty || pagamentoform.$submitted" class="invalid-feedback">
+                                <div ng-message="required">Obrigatório</div>
+                                <div ng-message="ccCvc">Inválido</div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                              <label class="font-weight-bold">Parcelamento</label>
+                              <select class="form-control" name="parcelamento" required ng-model="ctrl.pagamento.Parcelamento">
+                                <option value="">-- Parcela --</option>
+                                <option ng-repeat="parcela in ctrl.planoSelecionado.ValorParcelas track by $index" value="{{$index + 1}}">{{$index + 1}} x R$ {{parcela|number:2}}</option>
+                              </select>
+                              <div ng-messages="pagamentoform.parcelamento.$error" ng-if="pagamentoform.parcelamento.$dirty || pagamentoform.$submitted" class="invalid-feedback">
+                                <div ng-message="required">Obrigatório</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="col-md-3">
+                          <button class="btn btn-primary btn-lg btn-block linear-color-bground bgreen" type="submit" ng-click="ctrl.etapaAssinatura = 1">Voltar</button>
+                        </div>
+                        <div class="col-md-3">
+                          <button class="btn btn-primary btn-lg btn-block linear-color-bground" type="submit" ng-click="ctrl.contratar(pagamentoform)">Contratar</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal" tabindex="-1" role="dialog" id="modal-adicionar-perfil">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary" ng-if="ctrl.etapaContratacao == 1">Precisamos que você nos informe os dados do seu Instagram</h6>
+                  <h6 class="m-0 font-weight-bold text-primary" ng-if="ctrl.etapaContratacao == 2">Seus planos disponíveis</h6>
+                  <h6 class="m-0 font-weight-bold text-primary" ng-if="ctrl.etapaContratacao == 3">Autorização Instagram</h6>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="card-body">
+                  <div class="alert alert-danger" ng-if="!ctrl.contratacaoDisponivel">
+                    <p>Todos os seus planos já estão configurados com perfis no momento.</p>
+                    <p>Não se preocupe, você pode contratar um novo plano no botão <b>+ Adicionar</b> ao lado.</p>
+                  </div>
+                  <div ng-if="ctrl.contratacaoDisponivel">
+                    <form name="instaform" novalidate autocomplete="off" ng-if="ctrl.etapaContratacao == 1">
+                      <div class="mb-3">
+                        <label class="font-weight-bold">Usuário do Instagram:</label>
+                        <input type="text" class="form-control" name="usuario" placeholder="Usuário" required ng-model="ctrl.usuarioInstagram">
+                        <div ng-messages="instaform.usuario.$error" ng-if="instaform.usuario.$dirty || instaform.$submitted" class="invalid-feedback">
+                          <div ng-message="required">Obrigatório</div>
+                        </div>
+                      </div>
+                      <div class="mb-3 position-relative">
+                        <label class="font-weight-bold">Senha:</label>
+                        <div id="addpw" class="input-group-addon">
+                          <i id="eye" class="fa fa-eye-slash" ng-click="ctrl.showHidePassword('senha','eye')"></i>
+                        </div>
+                        <input type="password" class="form-control" id="senha" name="senha" placeholder="*****" required ng-model="ctrl.senhaInstagram">
+                        <div ng-messages="instaform.senha.$error" ng-if="instaform.senha.$dirty || instaform.$submitted" class="invalid-feedback">
+                          <div ng-message="required">Obrigatório</div>
+                        </div>
+                      </div>
+                      <span class="font-italic d-block text-center">Talvez seja necessário que você entre no seu aplicativo pelo celular para confirmar o acesso.</span>
+                      <button class="btn btn-primary btn-lg btn-block linear-color-bground mb-3 mt-3" type="submit" ng-click="ctrl.novoPerfil(instaform)">Validar Login Instagram</button>
+                    </form>
+                    <div class="list-group" ng-if="ctrl.etapaContratacao == 2">
+                      <h6 class="m-0 font-weight-bold mb-3">O usuário @{{ctrl.usuarioInstagram}} terá qual plano?</h6>
+                      <a class="list-group-item list-group-item-action" ng-repeat="contratacao in ctrl.contratacoes | filter: { IdPerfil: null }" ng-class="ctrl.contratacaoSelecionada == contratacao ? 'list-group-item-secondary' : ''" ng-click="ctrl.contratacaoSelecionada=contratacao">
+                        <div class="row">
+                          <div class="col-md-4 font-weight-bold text-dark">
+                            {{contratacao.Plano}}
+                          </div>
+                          <div class="col-md-8">
+                            Expira em {{contratacao.Expiracao | date: 'dd/MM/yyyy'}}
+                          </div>
+                        </div>
+                      </a>
+                      <button class="btn btn-primary btn-lg btn-block linear-color-bground bgreen mt-3" type="submit" ng-click="ctrl.atualizarContratacao()">Concluir</button>
+                    </div>
+                    <div ng-if="ctrl.etapaContratacao == 3">
+                      <p>{{ctrl.challenge.mensagem}}</p>
+                      <form name="autorizacaoform" novalidate autocomplete="off">
+                        <input type="text" class="form-control text-center form-control-lg" name="codigo" placeholder="Código recebido" mask="9" repeat="6" clean="true" restrict="reject" required ng-model="ctrl.challenge.codigo">
+                        <div ng-messages="autorizacaoform.codigo.$error" ng-if="autorizacaoform.codigo.$dirty || autorizacaoform.$submitted" class="invalid-feedback">
+                          <div ng-message="required">Obrigatório</div>
+                        </div>
+                        <button class="btn btn-primary btn-lg btn-block linear-color-bground mb-3 mt-3" ng-click="ctrl.validarCodigo(autorizacaoform)" type="submit">Validar Código</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" tabindex="-1" role="dialog" id="modal-cancelar-assinatura">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <div class="card shadow mb-4">
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Qual assinatura você deseja cancelar?</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="card-body">
+                <div class="alert alert-danger" ng-if="(ctrl.contratacoes | filter: {PlanoAtivo: true}).length == 0">
+                  Você não possui contratações ativas no momento.
+                </div>
+                <div class="list-group">
+                  <a class="list-group-item list-group-item-action" ng-repeat="contratacao in ctrl.contratacoes | filter: {PlanoAtivo: true}" ng-click="ctrl.cancelar(contratacao.Id)">
+                    <div class="row">
+                      <div class="col-md-12 ml-2 font-weight-bold text-dark">
+                        {{contratacao.Plano}} <small>Expira em {{contratacao.Expiracao | date: 'dd/MM/yyyy'}} {{ ctrl.usuarioPorPerfil(contratacao.IdPerfil) }}</small>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

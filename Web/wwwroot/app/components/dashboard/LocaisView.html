@@ -1,0 +1,119 @@
+<div class="container-fluid" disable-all="!ctrl.perfilSelecionado.PerfilAtivo">
+  <h1 class="h3 mb-4 text-gray-800"><img src="assets/img/ico-location.png" class="mr-2 align-middle">Localização</h1>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary"><img src="assets/img/ico-location.png" class="mr-2 align-bottom">Add Localização</h6>
+        </div>
+        <div class="card-body">
+          <div class="alert alert-light p-2">
+            <small class="font-weight-bold text-primary">
+              Adicione localizações que seus clientes frequentam.<br />Ex: (restaurantes, shopping, cidade, etc).
+            </small>
+          </div>
+          <form name="frmbuscalocal" novalidate autocomplete="off">
+            <div class="form-row">
+              <div class="mb-3 col-md-9">
+                <input type="text" class="form-control" name="busca" id="busca" placeholder="Pesquisar localização" ng-model="ctrl.busca" ng-disabled="ctrl.estaBuscando" required>
+                <div ng-messages="frmbuscalocal.busca.$error" ng-if="frmbuscalocal.busca.$dirty || frmbuscalocal.$submitted" class="invalid-feedback">
+                  <div ng-message="required">Obrigatório</div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <button class="btn btn-primary btn-block linear-color-bground bblue mb-3" id="buscar" ng-disabled="ctrl.estaBuscando" ng-click="ctrl.buscar(frmbuscalocal)">Buscar</button>
+              </div>
+            </div>
+          </form>
+          <small ng-if="ctrl.locaisEncontrados.length == 0">Não foram encontrados locais com esta informação</small>
+          <hr class="mb-4">
+          <ul class="list-unstyled" ng-if="ctrl.locaisEncontrados">
+            <li class="pt-3 pl-3 pb-3" ng-repeat="local in ctrl.locaisEncontrados">
+              <div class="row">
+                <div class="col-md-1">
+                  <img src="assets/img/ico-loca-red.png">
+                </div>
+                <div class="col-md-9 pl-3">
+                  <span class="d-block font-weight-bold text-dark">{{local.Nome}}</span>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <small>
+                        Local: {{local.Nome}}
+                      </small>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <small>
+                        Endereço: {{local.Endereco}}
+                      </small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1">
+                  <a ng-click="ctrl.adicionarLocal(local)">
+                    <img src="assets/img/ico-mais.png">
+                  </a>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary"><img src="assets/img/ico-location.png" class="mr-2 align-middle">Localizações Adicionadas</h6>
+        </div>
+        <div class="card-body">
+          <small ng-if="ctrl.locaisAdicionados.length == 0">Não foram adicionados locais ainda</small>
+          <ul class="list-unstyled">
+            <li class="pt-3 pl-3 pb-3" ng-repeat="local in ctrl.locaisAdicionados">
+              <div class="row">
+                <div class="col-md-1">
+                  <a ng-click="ctrl.removerLocal(local.Id)">
+                    <img src="assets/img/ico-cross.png">
+                  </a>
+                </div>
+                <div class="col-md-10">
+                  <span class="d-block font-weight-bold text-dark">{{local.Nome}}</span>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <small>
+                        Local: {{local.Nome}}
+                      </small>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <small>
+                        Endereço: {{local.Endereco}}
+                      </small>
+                    </div>
+                  </div>
+                </div>
+                <!--
+                <div class="col-md-5">
+                  <div class="d-block">
+                    <input type="checkbox" name="chkseguiu" id="chkseguiu" checked="checked" class="mr-1">
+                    <label>
+                      <small class="font-weight-bold text-dark">Seguir quem seguiu</small>
+                    </label>
+                  </div>
+                  <div class="d-block">
+                    <input type="checkbox" name="chkcurtiu" id="chkcurtiu" class="mr-1">
+                    <label for="chkcurtiu">
+                      <small class="font-weight-bold text-dark">Seguir quem curtiu</small>
+                    </label>
+                  </div>
+                </div>
+                -->
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,3 @@
+Add-Migration [MigrationName]
+Remove-Migration
+Update-Database -Verbose

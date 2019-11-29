@@ -1,0 +1,28 @@
+<div ui-view>
+  <div class="py-5 text-center">
+    <h1 class="display-4">Nova conta</h1>
+    <span class="h2 d-block">Entre com seu endereço de e-mail</span>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-5 order-md-1">
+      <form name="cadastroform" novalidate autocomplete="off">
+        <div class="mb-3">
+          <span class="linear-color-round">
+            <input type="email" class="form-control" name="email" placeholder="E-mail" ng-model="home.cadastro.Email" required>
+          </span>
+          <div ng-messages="cadastroform.email.$error" ng-if="cadastroform.email.$dirty || cadastroform.$submitted" class="invalid-feedback">
+            <div ng-message="required">Obrigatório</div>
+            <div ng-message="email">Precisa ser um e-mail válido</div>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-lg btn-block linear-color-bground mb-3" type="submit" ng-click="home.registrar(cadastroform, 'home.pin')">Registrar</button>
+      </form>
+      <span class="linear-color-round">
+        <a ui-sref="home.login" class="btn-block text-center text-dark lk-entrar pb-1 pt-1">
+          <img src="assets/img/entrar.png" class="mr-2" />
+          Entrar com uma conta já existente
+        </a>
+      </span>
+    </div>
+  </div>
+</div>

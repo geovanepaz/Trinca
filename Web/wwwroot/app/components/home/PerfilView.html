@@ -1,0 +1,87 @@
+<div ui-view>
+  <div class="py-5 text-center">
+    <h1 class="display-4">Bem-vindo ao <strong class="font-weight-bold">Studio4Gram</strong></h1>
+    <span class="h2 d-block">Para te ajudar, precisamos que você nos informe <br />os dados do seu Instagram</span>
+    <span class="h5 text-secondary d-block pt-2">Calma! Fique tranquilo, seus dados estão seguros e não ficarão salvos no nosso sistema.</span>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-5 order-md-1">
+      <form name="cadastroform" novalidate autocomplete="off">
+        <div class="mb-3">
+          <label class="font-weight-bold">Digite aqui seu usuário do Instagram:</label>
+          <span class="linear-color-round">
+            <input type="text" class="form-control" name="usuario" placeholder="Usuário" required ng-model="home.perfil.Usuario">
+          </span>
+          <div ng-messages="cadastroform.usuario.$error" ng-if="cadastroform.usuario.$dirty || cadastroform.$submitted" class="invalid-feedback">
+            <div ng-message="required">Obrigatório</div>
+          </div>
+        </div>
+        <div class="mb-3 position-relative">
+          <label class="font-weight-bold">Senha:</label>
+          <div id="addpw" class="input-group-addon">
+            <i id="eye" class="fa fa-eye-slash" ng-click="home.showHidePassword('senha','eye')"></i>
+          </div>
+          <span class="linear-color-round">
+            <input type="password" class="form-control" id="senha" name="senha" placeholder="*****" required ng-model="home.perfil.Senha">
+          </span>
+          <div ng-messages="cadastroform.senha.$error" ng-if="cadastroform.senha.$dirty || cadastroform.$submitted" class="invalid-feedback">
+            <div ng-message="required">Obrigatório</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="font-weight-bold">Hashtags aceitas: <small>(espaço ou enter para nova tag)</small></label>
+          <span class="linear-color-round">
+            <tags-input ng-model="home.perfil.HashTag" name="hashtag" use-strings="true" min-tags="1" add-on-space="true" placeholder="tag"></tags-input>
+          </span>
+          <div ng-messages="cadastroform.hashtag.$error" ng-if="cadastroform.hashtag.$dirty || cadastroform.$submitted" class="invalid-feedback">
+            <div ng-message="required">Obrigatório</div>
+            <div ng-message="minTags">No mínimo, 1 hashtag</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="font-weight-bold">Hashtags não aceitas: <small>(espaço ou enter para nova tag)</small></label>
+          <span class="linear-color-round">
+            <tags-input ng-model="home.perfil.BlackHashTag" use-strings="true" add-on-space="true" placeholder="tag"></tags-input>
+          </span>
+          <div ng-messages="cadastroform.hashtag.$error" ng-if="cadastroform.hashtag.$dirty || cadastroform.$submitted" class="invalid-feedback">
+            <div ng-message="required">Obrigatório</div>
+          </div>
+        </div>
+        <span class="font-italic d-block text-center">Talvez seja necessário que você entre no seu aplicativo pelo celular para confirmar o acesso.</span>
+        <button class="btn btn-primary btn-lg btn-block linear-color-bground mb-3 mt-3" type="submit" ng-click="home.validarLogin(cadastroform)">Validar Login Instagram</button>
+      </form>
+    </div>
+  </div>
+  <div class="modal" tabindex="-1" role="dialog" id="modal-challenge">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Autorização Instagram</h6>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="card-body">
+                  <p>{{home.challenge.mensagem}}</p>
+                  <form name="autorizacaoform" novalidate autocomplete="off">
+                    <span class="linear-color-round">
+                      <input type="text" class="form-control" name="codigo" style="border: 1px solid #ced4da !important;" placeholder="Código recebido" required ng-model="home.challenge.codigo">
+                    </span>
+                    <div ng-messages="autorizacaoform.codigo.$error" ng-if="autorizacaoform.codigo.$dirty || autorizacaoform.$submitted" class="invalid-feedback">
+                      <div ng-message="required">Obrigatório</div>
+                    </div>
+                    <button class="btn btn-primary btn-lg btn-block linear-color-bground mb-3 mt-3" ng-click="home.validarCodigo(autorizacaoform)" type="submit">Validar Código</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

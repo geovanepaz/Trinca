@@ -1,0 +1,23 @@
+<div ui-view>
+  <div class="py-5 text-center">
+    <h1 class="display-4">Confira seu e-mail</h1>
+    <span class="h2 d-block">Enviamos um código de 6 dígitos para <strong>{{home.cadastro.Email}}</strong></span>
+    <span class="h4 font-italic text-secondary">Digite o código abaixo para começar sua versão de avaliação do Studio4Gram.</span>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-6 order-md-1">
+      <form name="cadastroform" id="frmconfira" novalidate autocomplete="off">
+        <div class="mb-3">
+          <span class="linear-color-round ml-2" ng-repeat="pin in home.pinInputs track by $index">
+            <input ng-model="home.pinDigitado[$index]" set-focus="$first" type="text" maxlength="1" jump-next oninput="this.value=this.value.replace(/[^0-9]/g,'');" class="form-control text-center" placeholder="0">
+          </span>
+        </div>
+        <button class="btn btn-primary btn-lg btn-block linear-color-bground mb-3" type="submit" ng-click="home.confirmar()">Confirmar</button>
+      </form>
+      <span class="font-italic d-block text-center">
+        Não recebeu o e-mail?
+        <a href="" class="text-secondary font-weight-bold text-uppercase" ng-click="home.registrar(cadastroform)">Enviar novamente</a>
+      </span>
+    </div>
+  </div>
+</div>
